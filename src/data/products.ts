@@ -1,0 +1,717 @@
+export interface Product {
+  id: number;
+  name: string;
+  price: string;
+  priceVal: number;
+  category: string;
+  gender: string;
+  tags: string[];
+  colors: string[];
+  sizes: string[];
+  image: string;
+  images?: string[]; // Multiple high-res gallery images for split-screen vertical scroll
+  details?: string;
+  brand?: string; // Brand name (e.g., GM Fashion)
+}
+
+export const allProducts: Product[] = [
+  // User's featured products for Home Page & Product Detail Page
+  {
+    id: 1,
+    brand: 'GM Fashion',
+    name: 'GM Luxury Linen Fancy Shirt',
+    price: '₹ 1,499',
+    priceVal: 1499,
+    category: 'Fancy Shirts',
+    gender: 'Men',
+    tags: ['Premium', 'Best Seller'],
+    colors: ['#ffffff', '#cbd5e1', '#0f172a'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&q=80&w=800',
+    images: [
+      'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1620012253295-c05cb1e7420b?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&q=80&w=800'
+    ],
+    details: 'Meticulously crafted from extra-breathable, premium 100% organic linen yarn. This fancy shirt has subtle design elements, tailored to provide the perfect combination of contemporary posture and luxury drape.'
+  },
+  {
+    id: 2,
+    brand: 'GM Fashion',
+    name: 'GM Premium Crewneck Combo (Pack of 3)',
+    price: '₹ 999',
+    priceVal: 999,
+    category: 'Combo T-Shirts',
+    gender: 'Men',
+    tags: ['Combo Offer', 'Trending'],
+    colors: ['#0f172a', '#15803d', '#be123c'],
+    sizes: ['M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800',
+    images: [
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&w=800&q=80'
+    ],
+    details: 'A set of three super-comfy solid t-shirts in classic shades. Cut from 240GSM combed organic ring-spun cotton. High endurance neck ribbing and ultra-soft seam finishes.'
+  },
+  {
+    id: 3,
+    brand: 'GM Fashion',
+    name: 'GM Classic Italian Leather Belt',
+    price: '₹ 799',
+    priceVal: 799,
+    category: 'Belts',
+    gender: 'Men',
+    tags: ['Pure Leather', 'Premium Accessories'],
+    colors: ['#7c2d12', '#000000'],
+    sizes: ['32', '34', '36', '38'],
+    image: 'https://images.unsplash.com/photo-1624222247344-550fb8ec2780?auto=format&fit=crop&q=80&w=800',
+    images: [
+      'https://images.unsplash.com/photo-1624222247344-550fb8ec2780?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80'
+    ],
+    details: 'Crafted from full-grain vegetable-tanned oil-waxed genuine Italian leather. Solid brushed steel buckle fastening. A perfect, life-lasting addition to both your formal attire and smart casual ensembles.'
+  },
+  {
+    id: 4,
+    brand: 'GM Fashion',
+    name: 'GM Oud Absolu Luxury Perfume',
+    price: '₹ 1,899',
+    priceVal: 1899,
+    category: 'Perfumes',
+    gender: 'Unisex',
+    tags: ['Signature', 'Hot Selling'],
+    colors: ['#d97706'],
+    sizes: ['50ml', '100ml'],
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=800',
+    images: [
+      'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80'
+    ],
+    details: 'Our signature Oud Absolu. Features sophisticated, hand-harvested royal amber and dry cedar base notes, infused with deep agarwood (Oud) and fresh Mediterranean bergamot headnotes.'
+  },
+  {
+    id: 5,
+    brand: 'GM Fashion',
+    name: 'GM Chronograph Classic Steel Watch',
+    price: '₹ 2,499',
+    priceVal: 2499,
+    category: 'Watches',
+    gender: 'Men',
+    tags: ['Timepieces', 'Limited Edition'],
+    colors: ['#e2e8f0', '#0f172a'],
+    sizes: ['One Size'],
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800',
+    images: [
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1539874754764-5a96559165b0?auto=format&fit=crop&w=800&q=80'
+    ],
+    details: 'A vintage-inspired chronograph dial driven by a heavy precision Japanese Miyota quartz movement. Constructed with marine-grade 316L solid stainless steel and double-curved anti-reflective sapphire.'
+  },
+  {
+    id: 6,
+    brand: 'GM Fashion',
+    name: 'GM Ultra-Light Casual Sneakers',
+    price: '₹ 1,999',
+    priceVal: 1999,
+    category: 'Shoes',
+    gender: 'Men',
+    tags: ['Comfort Fit', 'Lightweight'],
+    colors: ['#ef4444', '#ffffff', '#0f172a'],
+    sizes: ['7', '8', '9', '10'],
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
+    images: [
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&q=80&w=800',
+      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=800&q=80'
+    ],
+    details: 'Extremely lightweight, breathable knit running and casual lifestyle shoe. The advanced hyper-bounce foam midsole provides premium underfoot impact-absorption and long-lasting cloud comfort.'
+  },
+  
+  // Outerwear
+  { 
+    id: 7, 
+    name: 'OBSIDIAN COAT', 
+    price: '₹ 14,500', 
+    priceVal: 14500, 
+    category: 'Outerwear', 
+    gender: 'Men', 
+    tags: ['New Arrivals'], 
+    colors: ['#000000', '#374151'], 
+    sizes: ['M', 'L', 'XL'], 
+    image: 'https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?auto=format&fit=crop&w=600&q=80',
+    details: 'A longline heavy wool wrap coat crafted from organic extra-fine wool fibers. Windproof thermal insulation lining protects in deep sub-zero environments.'
+  },
+  { 
+    id: 8, 
+    name: 'VECTOR-X TECH JACKET', 
+    price: '₹ 18,000', 
+    priceVal: 18000, 
+    category: 'Outerwear', 
+    gender: 'Women', 
+    tags: ['Editorial'], 
+    colors: ['#ffffff', '#9ca3af'], 
+    sizes: ['S', 'M', 'L'], 
+    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80',
+    details: 'High-altitude shell built with a three-layer Gore-Tex-equivalent membrane. Magnetic auto-aligning fasteners and fully taped interior seam sealing.'
+  },
+  { 
+    id: 9, 
+    name: 'FROST TRENCH', 
+    price: '₹ 9,900', 
+    priceVal: 9900, 
+    category: 'Outerwear', 
+    gender: 'Girl', 
+    tags: ['Collections'], 
+    colors: ['#fecdd3', '#ffffff'], 
+    sizes: ['XS', 'S', 'M'], 
+    image: 'https://images.unsplash.com/photo-1544923246-86ebefccdcbb?auto=format&fit=crop&w=600&q=80',
+    details: 'Lighter, wind-breaker style pastel pink trench coat with high collar, storm flaps, and adjustable belt ties.'
+  },
+  
+  // Accessories
+  { 
+    id: 10, 
+    name: 'LEATHER TOTE', 
+    price: '₹ 5,600', 
+    priceVal: 5600, 
+    category: 'Accessories', 
+    gender: 'Women', 
+    tags: [], 
+    colors: ['#78350f', '#000000'], 
+    sizes: ['One Size'], 
+    image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80',
+    details: 'Minimalist carryall tote built with vegetable-tanned full grain cowhide. Spacious unlined interior with a singular solid-brass hanging zip compartment.'
+  },
+  { 
+    id: 11, 
+    name: 'URBAN BACKPACK', 
+    price: '₹ 3,200', 
+    priceVal: 3200, 
+    category: 'Accessories', 
+    gender: 'Men', 
+    tags: ['New Arrivals'], 
+    colors: ['#374151', '#000000'], 
+    sizes: ['One Size'], 
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80',
+    details: 'Heavyweight ballistic nylon body featuring double waterproof zipper tracks, a plush 16" laptop sleeve, and quick-access utility pouches.'
+  },
+  { 
+    id: 12, 
+    name: 'SILK SCARF', 
+    price: '₹ 2,100', 
+    priceVal: 2100, 
+    category: 'Accessories', 
+    gender: 'Women', 
+    tags: [], 
+    colors: ['#fcd34d', '#f43f5e'], 
+    sizes: ['One Size'], 
+    image: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=600&q=80',
+    details: 'Made of fine 100% pure Mulberry silk, hand-rolled edges, decorated with abstract geometric contrast colors.'
+  },
+
+  // Essentials
+  { 
+    id: 13, 
+    name: 'BASIC COTTON TEE', 
+    price: '₹ 999', 
+    priceVal: 999, 
+    category: 'Essentials', 
+    gender: 'Men', 
+    tags: ['Collections'], 
+    colors: ['#ffffff', '#000000', '#9ca3af'], 
+    sizes: ['S', 'M', 'L', 'XL'], 
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80',
+    details: 'The ultimate daily essential tee. Made from heavy 280GSM organic ringspun cotton for a structured boxy drape that holds its shape indefinitely.'
+  },
+  { 
+    id: 14, 
+    name: 'LOUNGE PANTS', 
+    price: '₹ 1,500', 
+    priceVal: 1500, 
+    category: 'Essentials', 
+    gender: 'Women', 
+    tags: [], 
+    colors: ['#e5e7eb', '#374151'], 
+    sizes: ['S', 'M', 'L'], 
+    image: 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=600&q=80',
+    details: 'Ultra-soft french terry lounge pants with an elastic waist drawstring and side seam pockets. Engineered for off-duty lounge comfort.'
+  },
+  
+  // Timepieces
+  { 
+    id: 15, 
+    name: 'CHRONO CLASSIC', 
+    price: '₹ 24,000', 
+    priceVal: 24000, 
+    category: 'Timepieces', 
+    gender: 'Men', 
+    tags: ['New Arrivals'], 
+    colors: ['#d4d4d8', '#000000'], 
+    sizes: ['One Size'], 
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
+    details: 'Precision Japanese chronograph movement housed in surgical grade 316L sandblasted stainless steel. Features a sapphire-coated mineral lens.'
+  },
+  { 
+    id: 16, 
+    name: 'ROSE GOLD VINTAGE', 
+    price: '₹ 18,500', 
+    priceVal: 18500, 
+    category: 'Timepieces', 
+    gender: 'Women', 
+    tags: ['Editorial'], 
+    colors: ['#fbcfe8', '#ffffff'], 
+    sizes: ['One Size'], 
+    image: 'https://images.unsplash.com/photo-1587588320490-67c00e12762a?auto=format&fit=crop&w=600&q=80',
+    details: 'An elegant vintage rectangular wristwatch featuring subtle rose-gold accents, custom dials, and a supple black leather strap.'
+  },
+
+  // Knitwear
+  { 
+    id: 17, 
+    name: 'CHUNKY SWEATER', 
+    price: '₹ 4,800', 
+    priceVal: 4800, 
+    category: 'Knitwear', 
+    gender: 'Women', 
+    tags: ['Collections'], 
+    colors: ['#f3f4f6', '#d1d5db'], 
+    sizes: ['S', 'M', 'L'], 
+    image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80',
+    details: 'Loose knit design featuring premium alpaca wool blend yarn. Soft, fuzzy, warm texture with drop shoulder comfort seams.'
+  },
+  { 
+    id: 18, 
+    name: 'MERINO CARDIGAN', 
+    price: '₹ 6,500', 
+    priceVal: 6500, 
+    category: 'Knitwear', 
+    gender: 'Men', 
+    tags: [], 
+    colors: ['#1f2937', '#4b5563'], 
+    sizes: ['M', 'L', 'XL'], 
+    image: 'https://images.unsplash.com/photo-1579896791242-7a0fe5c86c12?auto=format&fit=crop&w=600&q=80',
+    details: 'Crafted entirely from extra-fine Australian Merino wool. Designed for easy layering, with standard ribbed hem bands and horn button fasteners.'
+  },
+  // --- MEN PRODUCTS ---
+  {
+    id: 19,
+    brand: 'GM Fashion',
+    name: 'GM Prime Casual Cotton Shirt',
+    price: '₹ 1,299',
+    priceVal: 1299,
+    category: 'Shirt',
+    gender: 'Men',
+    tags: ['Top Wear', 'Premium'],
+    colors: ['#ffffff', '#cbd5e1', '#3b82f6'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=800',
+    details: 'Crafted from premium 100% long-staple combed cotton. Featuring a crisp semi-spread collar, single patch pocket, and a clean curvature hem.'
+  },
+  {
+    id: 20,
+    brand: 'GM Fashion',
+    name: 'GM Prime Crewneck Tee',
+    price: '₹ 699',
+    priceVal: 699,
+    category: 'T-Shirt',
+    gender: 'Men',
+    tags: ['Top Wear', 'Best Seller'],
+    colors: ['#000000', '#ef4444', '#9ca3af'],
+    sizes: ['M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800',
+    details: 'The ultimate daily crewneck, knitted with 220GSM organic ring-spun cotton. Premium neck ribbing retains shape wash after wash.'
+  },
+  {
+    id: 21,
+    brand: 'GM Fashion',
+    name: 'GM Stretch Slim-Fit Chino Pant',
+    price: '₹ 1,799',
+    priceVal: 1799,
+    category: 'Pant',
+    gender: 'Men',
+    tags: ['Bottom Wear', 'Trending'],
+    colors: ['#7c2d12', '#000000', '#4b5563'],
+    sizes: ['30', '32', '34', '36'],
+    image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=800',
+    details: 'Premium twill chinos featuring dynamic four-way spandex stretch. Clean tailored posture with durable satin-lined slide pockets.'
+  },
+  {
+    id: 22,
+    brand: 'GM Fashion',
+    name: 'GM Activewear Dry-Fit Track Pant',
+    price: '₹ 1,199',
+    priceVal: 1199,
+    category: 'Track Pant',
+    gender: 'Men',
+    tags: ['Bottom Wear', 'Activewear'],
+    colors: ['#0f172a', '#374151'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1517438476312-10d79c07750d?auto=format&fit=crop&q=80&w=800',
+    details: 'Engineered for thermal balance, this lightweight performance track pant features sweat-wicking fabric and secure-zippered side pockets.'
+  },
+  {
+    id: 23,
+    brand: 'GM Fashion',
+    name: 'GM Casual Summer Cotton Shorts',
+    price: '₹ 899',
+    priceVal: 899,
+    category: 'Shorts',
+    gender: 'Men',
+    tags: ['Bottom Wear', 'Casual'],
+    colors: ['#cbd5e1', '#b45309'],
+    sizes: ['30', '32', '34', '36'],
+    image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&q=80&w=800',
+    details: 'Laid-back style meet incredible comfort. Cut from soft pre-washed cotton canvas. Double stitched details and comfortable elastic waist tie.'
+  },
+  {
+    id: 24,
+    brand: 'GM Fashion',
+    name: 'GM Classic Ribbed Underwear Vest',
+    price: '₹ 349',
+    priceVal: 349,
+    category: 'Vest',
+    gender: 'Men',
+    tags: ['Inner Wear'],
+    colors: ['#ffffff'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800',
+    details: 'Super soft combed cotton rib material. Tight contour fit that does not bunch under shirts. Seamless sides ensure zero friction.'
+  },
+  {
+    id: 25,
+    brand: 'GM Fashion',
+    name: 'GM Performance Gym Training Tank',
+    price: '₹ 499',
+    priceVal: 499,
+    category: 'Gym',
+    gender: 'Men',
+    tags: ['Inner Wear', 'Gymwear'],
+    colors: ['#000000', '#9ca3af'],
+    sizes: ['M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=800',
+    details: 'Breathable micromesh ventilation with deep underarm cuts for full range of motion during gym training. Flatlock seams prevent chafing.'
+  },
+  {
+    id: 26,
+    brand: 'GM Fashion',
+    name: 'GM Premium Soft Cotton Brief (Pack of 2)',
+    price: '₹ 449',
+    priceVal: 449,
+    category: 'Brief',
+    gender: 'Men',
+    tags: ['Inner Wear'],
+    colors: ['#0f172a', '#2563eb'],
+    sizes: ['M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&q=80&w=800',
+    details: 'Luxury micro-modal and combed cotton blend brief. Designed with an anti-roll waistband and a customized double-ply front contour pouch.'
+  },
+  {
+    id: 27,
+    brand: 'GM Fashion',
+    name: 'GM Comfort Fit Cotton Trunk',
+    price: '₹ 399',
+    priceVal: 399,
+    category: 'Trunk',
+    gender: 'Men',
+    tags: ['Inner Wear'],
+    colors: ['#0f172a', '#374151'],
+    sizes: ['M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1608228079938-c6250f2aa74f?auto=format&fit=crop&q=80&w=800',
+    details: 'Square-leg cotton trunks with reinforced flat seams. Plush brushed elastane waistband provides custom snug security without skin irritation.'
+  },
+  {
+    id: 28,
+    brand: 'GM Fashion',
+    name: 'GM Royal Traditional Silk Shirt',
+    price: '₹ 1,899',
+    priceVal: 1899,
+    category: 'Traditional Shirt',
+    gender: 'Men',
+    tags: ['Traditional', 'Festive'],
+    colors: ['#fef08a', '#ffffff'],
+    sizes: ['M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=800',
+    details: 'A pure dupion art-silk shirt featuring dynamic gold thread borders. Tailored for festive posture with a comfortable classic relax fit.'
+  },
+  {
+    id: 29,
+    brand: 'GM Fashion',
+    name: 'GM Royal Jari Border Cotton Dhoti',
+    price: '₹ 999',
+    priceVal: 999,
+    category: 'Dhoti',
+    gender: 'Men',
+    tags: ['Traditional', 'Pure Cotton'],
+    colors: ['#ffffff'],
+    sizes: ['Free Size'],
+    image: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg',
+    details: 'Exquisite 8-hand premium combed cotton dhoti adorned with a 2-inch premium golden jari border. Pure comfort and elegant cultural pride.'
+  },
+  {
+    id: 30,
+    brand: 'GM Fashion',
+    name: 'GM Vaibhavam Dhoti & Shirt Gift Set',
+    price: '₹ 2,499',
+    priceVal: 2499,
+    category: 'Set Dhoti',
+    gender: 'Men',
+    tags: ['Traditional', 'Gift Set'],
+    colors: ['#ffffff'],
+    sizes: ['M', 'L', 'XL'],
+    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&q=80&w=800',
+    details: 'A curated ritual luxury gift set consisting of a matching 100% combed cotton festive shirt and a double-layered jari border dhoti.'
+  },
+
+  // --- BOYS PRODUCTS ---
+  {
+    id: 31,
+    brand: 'GM Kids',
+    name: 'GM Boys Checkered Cotton Casual Shirt',
+    price: '₹ 799',
+    priceVal: 799,
+    category: 'Shirt',
+    gender: 'Boy',
+    tags: ['Top Wear', 'Kids Casual'],
+    colors: ['#ef4444', '#3b82f6'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&q=80&w=800',
+    details: 'Durable, pure-cotton plaid flannel shirt with a sturdy chest pocket and adjustable button cuffs. Made for easy school and party styling.'
+  },
+  {
+    id: 32,
+    brand: 'GM Kids',
+    name: 'GM Boys Adventure Graphic Tee',
+    price: '₹ 499',
+    priceVal: 499,
+    category: 'T-Shirt',
+    gender: 'Boy',
+    tags: ['Top Wear', 'Best Seller'],
+    colors: ['#e0f2fe', '#fef08a'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&q=80&w=800',
+    details: 'Knitted from ultra-soft skin-friendly combed cotton, this colorful graphic t-shirt is designed for continuous play and skin comfort.'
+  },
+  {
+    id: 33,
+    brand: 'GM Kids',
+    name: 'GM Boys Comfort Fit Chino Pant',
+    price: '₹ 999',
+    priceVal: 999,
+    category: 'Pant',
+    gender: 'Boy',
+    tags: ['Bottom Wear'],
+    colors: ['#78350f', '#4b5563'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=800',
+    details: 'Comes with a hidden elastic waistband adjustments. Made of breathable stretch twill that stands up to rugged play.'
+  },
+  {
+    id: 34,
+    brand: 'GM Kids',
+    name: 'GM Boys Active Fleece Track Pant',
+    price: '₹ 749',
+    priceVal: 749,
+    category: 'Track Pant',
+    gender: 'Boy',
+    tags: ['Bottom Wear', 'Active'],
+    colors: ['#1f2937', '#9ca3af'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80',
+    details: 'Warm, cozy, premium French Terry lining track pant. Featuring ribbed ankle cuffs and a soft inner drawstring.'
+  },
+  {
+    id: 35,
+    brand: 'GM Kids',
+    name: 'GM Boys Casual Outdoor Shorts',
+    price: '₹ 599',
+    priceVal: 599,
+    category: 'Shorts',
+    gender: 'Boy',
+    tags: ['Bottom Wear', 'Casual'],
+    colors: ['#3b82f6', '#10b981'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1618354691452-16eac7efc5be?auto=format&fit=crop&w=600&q=80',
+    details: 'Classic cotton utility cargo shorts. Lots of pocket space for outdoor trinkets. Sturdy snap button waistband closure.'
+  },
+  {
+    id: 36,
+    brand: 'GM Kids',
+    name: 'GM Boys Super Soft Pure Cotton Vest',
+    price: '₹ 199',
+    priceVal: 199,
+    category: 'Vest',
+    gender: 'Boy',
+    tags: ['Inner Wear'],
+    colors: ['#ffffff'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&q=80',
+    details: 'High-grade non-allergenic pure cotton undergarment vest. Absolutely flat skin seams for continuous irritation-free comfort.'
+  },
+  {
+    id: 37,
+    brand: 'GM Kids',
+    name: 'GM Boys Sleeveless Active Gym Tank',
+    price: '₹ 299',
+    priceVal: 299,
+    category: 'Gym',
+    gender: 'Boy',
+    tags: ['Inner Wear', 'Gymwear'],
+    colors: ['#000000', '#3b82f6'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=800',
+    details: 'Moisture wicking athletic tank, designed to keep them dry and energetic during heavy playground workouts and sports training.'
+  },
+  {
+    id: 38,
+    brand: 'GM Kids',
+    name: 'GM Boys Stretch Cotton Briefs',
+    price: '₹ 249',
+    priceVal: 249,
+    category: 'Brief',
+    gender: 'Boy',
+    tags: ['Inner Wear'],
+    colors: ['#2563eb'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&q=80&w=800',
+    details: 'Elasticized micro-brushed waistband briefs with a gentle cotton lined pouch, offering super snug fit without slipping.'
+  },
+  {
+    id: 39,
+    brand: 'GM Kids',
+    name: 'GM Boys Comfort Fit Cotton Trunk',
+    price: '₹ 279',
+    priceVal: 279,
+    category: 'Trunk',
+    gender: 'Boy',
+    tags: ['Inner Wear'],
+    colors: ['#1e293b'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1608228079938-c6250f2aa74f?auto=format&fit=crop&q=80&w=800',
+    details: 'Boxer-brief trunk underwear style in pre-shrunk cotton fabric. Prevents inner-thigh friction or sweat irritation during play.'
+  },
+  {
+    id: 40,
+    brand: 'GM Kids',
+    name: 'GM Boys Traditional Dhoti & Shirt Set',
+    price: '₹ 1,299',
+    priceVal: 1299,
+    category: 'Set Dhoti',
+    gender: 'Boy',
+    tags: ['Traditional', 'Festive'],
+    colors: ['#ffffff'],
+    sizes: ['6-7Y', '8-9Y', '10-11Y', '12-13Y'],
+    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&q=80&w=800',
+    details: 'Traditional South Indian festival dress. Pre-stitched velcro pocket-dhoti and comfortable cotton half-sleeve festive shirt.'
+  },
+
+  // --- KIDS GENERAL PRODUCTS ---
+  {
+    id: 41,
+    brand: 'GM Kids',
+    name: 'GM Kids Organic Cotton Play Shirt',
+    price: '₹ 699',
+    priceVal: 699,
+    category: 'Shirt',
+    gender: 'Kids',
+    tags: ['Top Wear', 'Kids'],
+    colors: ['#fed7aa', '#bae6fd'],
+    sizes: ['2-3Y', '4-5Y', '6-7Y'],
+    image: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&q=80&w=800',
+    details: 'Super lightweight, certified organic cotton kid play shirt. Easy-snap wooden buttons are completely baby-safe.'
+  },
+  {
+    id: 42,
+    brand: 'GM Kids',
+    name: 'GM Kids Bright Cotton T-Shirt',
+    price: '₹ 399',
+    priceVal: 399,
+    category: 'T-Shirt',
+    gender: 'Kids',
+    tags: ['Top Wear', 'Kids'],
+    colors: ['#f43f5e', '#facc15'],
+    sizes: ['2-3Y', '4-5Y', '6-7Y'],
+    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80',
+    details: 'Cheerful kids round neck t-shirt made with stretch-blend organic cotton, resisting play stains and fading.'
+  },
+  {
+    id: 43,
+    brand: 'GM Kids',
+    name: 'GM Kids Easy Pull-On Pant',
+    price: '₹ 799',
+    priceVal: 799,
+    category: 'Pant',
+    gender: 'Kids',
+    tags: ['Bottom Wear', 'Kids'],
+    colors: ['#4b5563', '#d97706'],
+    sizes: ['2-3Y', '4-5Y', '6-7Y'],
+    image: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=800',
+    details: 'Stretchy cotton rib waistline allows kids to easily pull pants up and down. Gentle ankles and soft knee reinforcements.'
+  },
+  {
+    id: 44,
+    brand: 'GM Kids',
+    name: 'GM Kids Cotton Play Track Pant',
+    price: '₹ 649',
+    priceVal: 649,
+    category: 'Track Pant',
+    gender: 'Kids',
+    tags: ['Bottom Wear', 'Kids'],
+    colors: ['#374151', '#f3f4f6'],
+    sizes: ['2-3Y', '4-5Y', '6-7Y'],
+    image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80',
+    details: 'Playground-ready soft knit track pants. Warm inner feel, double stitched knees for extra scuff resistance.'
+  },
+  {
+    id: 45,
+    brand: 'GM Kids',
+    name: 'GM Kids Active Summer Shorts',
+    price: '₹ 499',
+    priceVal: 499,
+    category: 'Shorts',
+    gender: 'Kids',
+    tags: ['Bottom Wear', 'Kids'],
+    colors: ['#3b82f6', '#fb7185'],
+    sizes: ['2-3Y', '4-5Y', '6-7Y'],
+    image: 'https://images.unsplash.com/photo-1618354691452-16eac7efc5be?auto=format&fit=crop&w=600&q=80',
+    details: 'Super breezy light-knit cotton shorts with an active elastic waist. Perfect for garden play sessions and summer days.'
+  },
+  {
+    id: 46,
+    brand: 'GM Kids',
+    name: 'GM Kids Comfy Inner Cotton Vest',
+    price: '₹ 159',
+    priceVal: 159,
+    category: 'Vest',
+    gender: 'Kids',
+    tags: ['Inner Wear', 'Kids'],
+    colors: ['#ffffff'],
+    sizes: ['2-3Y', '4-5Y', '6-7Y'],
+    image: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&q=80',
+    details: 'Ultra-fine soft knit organic cotton. Ideal as a thermal liner under clothing, completely tagless for ultimate sensory peace.'
+  },
+  {
+    id: 47,
+    brand: 'GM Kids',
+    name: 'GM Kids Traditional Dhoti & Kurta Set',
+    price: '₹ 1,199',
+    priceVal: 1199,
+    category: 'Set Dhoti',
+    gender: 'Kids',
+    tags: ['Traditional', 'Kids Festive'],
+    colors: ['#ffffff', '#fef08a'],
+    sizes: ['2-3Y', '4-5Y', '6-7Y'],
+    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
+    details: 'Extremely sweet pre-stitched cotton dhoti and soft art-silk embroidered kurta top. Easy velcro waistband for baby convenience.'
+  }
+];
+
