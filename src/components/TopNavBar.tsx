@@ -178,8 +178,16 @@ export default function TopNavBar() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search for products, brands..."
-                    className="w-full bg-transparent text-xs sm:text-sm text-zinc-900 focus:outline-none font-body py-1.5 sm:py-2 pl-2 pr-4 placeholder-zinc-400 font-medium"
+                    className="w-full bg-transparent text-xs sm:text-sm text-zinc-900 focus:outline-none font-body py-1.5 sm:py-2 pl-2 pr-2 placeholder-zinc-400 font-medium"
                   />
+                  <button 
+                    type="button"
+                    onClick={() => setIsVisualSearchOpen(true)}
+                    className="p-1.5 text-zinc-500 hover:text-zinc-900 transition-colors mr-1 cursor-pointer flex items-center justify-center rounded-lg hover:bg-zinc-100 shrink-0"
+                    title="Search by image / Camera"
+                  >
+                    <Camera size={16} />
+                  </button>
                 </div>
               </form>
             </div>
@@ -247,8 +255,16 @@ export default function TopNavBar() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search for products, brands and more..."
-                  className="w-full bg-transparent text-xs text-zinc-900 focus:outline-none font-body py-1.5 pl-2 pr-4 placeholder-zinc-400 font-medium"
+                  className="w-full bg-transparent text-xs text-zinc-900 focus:outline-none font-body py-1.5 pl-2 pr-2 placeholder-zinc-400 font-medium"
                 />
+                <button 
+                  type="button"
+                  onClick={() => setIsVisualSearchOpen(true)}
+                  className="p-1.5 text-zinc-500 hover:text-zinc-900 transition-colors mr-1.5 cursor-pointer flex items-center justify-center rounded-lg hover:bg-zinc-100 shrink-0"
+                  title="Search by image / Camera"
+                >
+                  <Camera size={18} />
+                </button>
               </div>
             </form>
           </div>
