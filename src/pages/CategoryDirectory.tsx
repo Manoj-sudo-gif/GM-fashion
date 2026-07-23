@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, ArrowLeft, Heart, ShoppingBag, Tags, Sparkles, Filter, Check, Star, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { allProducts, Product } from '../data/products';
+import DepartmentHeroSlider from '../components/DepartmentHeroSlider';
 
 // Define structures for category groups
 interface SubCategoryItem {
@@ -412,6 +413,12 @@ export default function CategoryDirectory() {
                   })}
                 </div>
               </div>
+
+              {/* 16:9 Branded Hero Offer Carousel Slider */}
+              <DepartmentHeroSlider 
+                department={activeDept} 
+                onSelectSubCategory={(parentGroup, subCat) => setSelectedSub({ parentGroup, subCategory: subCat })} 
+              />
 
               {DEPARTMENT_DATA[activeDept]?.map((group) => (
                 <div 
