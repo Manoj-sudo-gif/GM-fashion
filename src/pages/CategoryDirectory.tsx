@@ -15,6 +15,8 @@ interface CategoryGroup {
   items: SubCategoryItem[];
 }
 
+const DEPARTMENTS = ['Men', 'Boys', 'Kids', 'Accessories'];
+
 export default function CategoryDirectory() {
   const { gender } = useParams<{ gender: string }>();
   const navigate = useNavigate();
@@ -164,6 +166,7 @@ export default function CategoryDirectory() {
           items: [
             { name: 'Shirt', img: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&q=80&w=300' },
             { name: 'T-Shirt', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&q=80&w=300' },
+            { name: 'Polo Shirts', img: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&q=80&w=300' },
             { name: 'Graphic Tees', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=300' },
             { name: 'Hoodies', img: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=300' },
             { name: 'Jackets', img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&q=80&w=300' }
@@ -175,7 +178,8 @@ export default function CategoryDirectory() {
             { name: 'Jeans', img: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=300' },
             { name: 'Track Pant', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=300&q=80' },
             { name: 'Shorts', img: 'https://images.unsplash.com/photo-1618354691452-16eac7efc5be?auto=format&fit=crop&q=80&w=300' },
-            { name: 'Cargo Shorts', img: 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&q=80&w=300' }
+            { name: 'Cargo Shorts', img: 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&q=80&w=300' },
+            { name: 'Joggers', img: 'https://images.unsplash.com/photo-1517438476312-10d79c07750d?auto=format&fit=crop&q=80&w=300' }
           ]
         },
         {
@@ -183,15 +187,26 @@ export default function CategoryDirectory() {
           items: [
             { name: 'Vest', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=300&q=80' },
             { name: 'Briefs', img: 'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Sleepwear', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=300&q=80' }
+            { name: 'Sleepwear', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Socks', img: 'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=300&q=80' }
           ]
         },
         {
-          title: 'Traditional Wear',
+          title: 'Traditional & Party',
           items: [
             { name: 'Kurta Set', img: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=300' },
             { name: 'Set Dhoti', img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Party Suit', img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=300' }
+            { name: 'Party Suit', img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=300' },
+            { name: 'Ethnic Jacket', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=300&q=80' }
+          ]
+        },
+        {
+          title: 'Footwear & Accessories',
+          items: [
+            { name: 'Boys Sneakers', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=300' },
+            { name: 'Sandals', img: 'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&q=80&w=300' },
+            { name: 'Caps & Hats', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&q=80&w=300' },
+            { name: 'School Backpacks', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=300' }
           ]
         }
       ],
@@ -202,7 +217,8 @@ export default function CategoryDirectory() {
             { name: 'Shirt', img: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&q=80&w=300' },
             { name: 'T-Shirt', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=300&q=80' },
             { name: 'Rompers & Onesies', img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Sweaters', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=300&q=80' }
+            { name: 'Sweaters', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Kids Jackets', img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&q=80&w=300' }
           ]
         },
         {
@@ -210,7 +226,8 @@ export default function CategoryDirectory() {
           items: [
             { name: 'Soft Pants', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=300' },
             { name: 'Shorts', img: 'https://images.unsplash.com/photo-1618354691452-16eac7efc5be?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Dungarees', img: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=300&q=80' }
+            { name: 'Dungarees', img: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Bloomings & Shorts', img: 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&q=80&w=300' }
           ]
         },
         {
@@ -218,34 +235,60 @@ export default function CategoryDirectory() {
           items: [
             { name: 'Kids Dhoti', img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=300&q=80' },
             { name: 'Inner Vests', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Baby Booties & Socks', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=80' }
+            { name: 'Baby Booties & Socks', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Baby Caps & Bibs', img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=300&q=80' }
           ]
         }
       ],
       Accessories: [
         {
-          title: 'Bags & Wallets',
+          title: 'Perfume & Grooming',
           items: [
-            { name: 'Leather Wallets', img: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Perfume & Cologne', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Body Spray', img: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Grooming Essentials', img: 'https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=300&q=80' }
+          ]
+        },
+        {
+          title: 'Wallets & Belts',
+          items: [
+            { name: 'Men Wallets', img: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Leather Belts', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Card Holders', img: 'https://images.unsplash.com/photo-1608228079938-c6250f2aa74f?auto=format&fit=crop&w=300&q=80' }
+          ]
+        },
+        {
+          title: 'Handkerchiefs & Formal Details',
+          items: [
+            { name: 'Kerchiefs & Handkerchiefs', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Ties & Bowties', img: 'https://images.unsplash.com/photo-1598808503746-f34c53b9323e?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Cufflinks', img: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=300&q=80' }
+          ]
+        },
+        {
+          title: 'Watches & Jewelry',
+          items: [
+            { name: 'Watches', img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Sunglasses', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Chains & Bracelets', img: 'https://images.unsplash.com/photo-1611591475171-897e4ce6b8df?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Caps & Hats', img: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=300&q=80' }
+          ]
+        },
+        {
+          title: 'Bags & Footwear',
+          items: [
             { name: 'Backpacks', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Sling & Travel Bags', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=300&q=80' }
+            { name: 'Sling Bags', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Ethnic Juttis & Mojris', img: 'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Sneakers & Shoes', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=80' },
+            { name: 'Socks', img: 'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=300&q=80' }
           ]
         },
         {
-          title: 'Footwear & Juttis',
-          items: [
-            { name: 'Sneakers', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Formal Shoes', img: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Ethnic Juttis & Mojris', img: 'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&w=300&q=80' }
-          ]
-        },
-        {
-          title: 'Style Essentials',
+          title: 'Traditional Style Essentials',
           items: [
             { name: 'Dhotis', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' },
-            { name: 'Belts', img: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Watches', img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=300&q=80' },
-            { name: 'Sunglasses & Caps', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=300&q=80' }
+            { name: 'Set Dhoti', img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=300&q=80' }
           ]
         }
       ]
@@ -328,8 +371,48 @@ export default function CategoryDirectory() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="flex-1 flex flex-col gap-5 h-full overflow-y-auto pb-8 pr-1"
+              className="flex-1 flex flex-col gap-4 h-full overflow-y-auto pb-8 pr-1"
             >
+              {/* Department Title Header Banner & Quick Switcher */}
+              <div className="bg-gradient-to-r from-zinc-900 via-zinc-900 to-zinc-800 text-white p-3.5 sm:p-5 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0 mt-2 border border-zinc-800">
+                <div className="flex items-center gap-3">
+                  <div className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full ${themeAccent.bg} ring-4 ring-white/10 shrink-0`} />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-white/10 text-white/90">
+                        {activeDept} Department
+                      </span>
+                    </div>
+                    <h1 className="text-base sm:text-lg md:text-xl font-black uppercase tracking-wider font-headline mt-0.5 text-white">
+                      {activeDept === 'Men' && "Men's Collection & Apparels"}
+                      {activeDept === 'Boys' && "Boys' Fashion & Wear"}
+                      {activeDept === 'Kids' && "Kids & Toddler Essentials"}
+                      {activeDept === 'Accessories' && "Accessories, Grooming & Perfumes"}
+                    </h1>
+                  </div>
+                </div>
+
+                {/* Quick Department Switcher Pills */}
+                <div className="flex items-center gap-1.5 bg-black/40 p-1 rounded-xl border border-white/10 overflow-x-auto shrink-0 scrollbar-none">
+                  {DEPARTMENTS.map((dept) => {
+                    const isActive = activeDept === dept;
+                    return (
+                      <button
+                        key={dept}
+                        onClick={() => handleDeptChange(dept)}
+                        className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer ${
+                          isActive 
+                            ? 'bg-white text-zinc-950 shadow-xs scale-105' 
+                            : 'text-zinc-300 hover:text-white hover:bg-white/10'
+                        }`}
+                      >
+                        {dept}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {DEPARTMENT_DATA[activeDept]?.map((group) => (
                 <div 
                   key={group.title} 
