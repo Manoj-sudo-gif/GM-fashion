@@ -210,8 +210,8 @@ export default function DepartmentHeroSlider({ department, onSelectSubCategory }
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Aspect Ratio Container (16:9 on mobile, slightly wider on desktop) */}
-      <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[24/9] bg-zinc-900 overflow-hidden">
+      {/* Aspect Ratio Container (Sleek ultra-wide on desktop so all categories fit neatly) */}
+      <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[24/9] lg:aspect-[28/8] lg:max-h-52 bg-zinc-900 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={`${department}-${currentSlide.id}`}

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, ShoppingBag, Search, User, Camera, X, RefreshCw, Upload, Sparkles, Trash2, Baby, Gamepad2 } from 'lucide-react';
-import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 
 export default function TopNavBar() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const category = searchParams.get('category');
   const currentSearch = searchParams.get('search') || '';
+
+  const isCategoryPage = location.pathname.startsWith('/category');
 
   const [searchQuery, setSearchQuery] = useState(currentSearch);
   const [isVisualSearchOpen, setIsVisualSearchOpen] = useState(false);
@@ -66,8 +69,8 @@ export default function TopNavBar() {
 
   const getLinkClass = (currentCategory: string | null) => {
     const isActive = category === currentCategory || 
-      (currentCategory === 'Men' && window.location.pathname.startsWith('/category/Men')) ||
-      (currentCategory === null && !category && window.location.pathname !== '/' && !window.location.pathname.startsWith('/category'));
+      (currentCategory === 'Men' && location.pathname.startsWith('/category/Men')) ||
+      (currentCategory === null && !category && location.pathname !== '/' && !location.pathname.startsWith('/category'));
     return `font-headline tracking-tight transition-colors text-xs uppercase tracking-widest font-bold ${
       isActive 
         ? 'text-zinc-900 font-extrabold border-b-2 border-zinc-900 pb-1' 
@@ -120,15 +123,16 @@ export default function TopNavBar() {
   return (
     <>
       <nav className={`sticky top-0 w-full z-[80] bg-white/95 backdrop-blur-xl border-b border-zinc-200/50 flex flex-col justify-between transition-[padding,box-shadow,background-color] duration-300 ease-out will-change-[padding,box-shadow] ${
-        isScrolled ? 'py-1 px-3 sm:px-4 md:px-5 shadow-md' : 'py-3 px-4 md:px-8 shadow-sm'
+        isScrolled ? 'py-1 px-3 sm:px-4 md:px-5 shadow-md' : 'py-2 px-4 md:px-8 shadow-sm'
       }`}>
+        <div className="max-w-7xl mx-auto w-full flex flex-col">
         {/* Main Row / Row 1 */}
-        <div className={`flex justify-between items-center h-14 md:h-16 w-full transition-[gap] duration-300 ${isScrolled ? 'gap-2 sm:gap-3' : 'gap-4'}`}>
+        <div className={`flex justify-between items-center h-13 md:h-15 w-full transition-[gap] duration-300 ${isScrolled ? 'gap-2 sm:gap-3' : 'gap-4'}`}>
           
           <div className={`flex items-center flex-grow transition-[gap] duration-300 ${isScrolled ? 'gap-0' : 'gap-4'}`}>
             {/* GM FASHION Logo */}
             <div className={`transition-[opacity,transform,max-width] duration-300 ease-out origin-left flex items-center shrink-0 will-change-[opacity,transform,max-width] ${
-              isScrolled 
+              isScrolled && !isCategoryPage 
                 ? 'opacity-0 max-w-0 -translate-x-10 pointer-events-none overflow-hidden mr-0' 
                 : 'opacity-100 max-w-[180px] translate-x-0 mr-4'
             }`}>
@@ -139,7 +143,7 @@ export default function TopNavBar() {
             
             {/* Desktop Navigation Links */}
             <div className={`hidden md:flex gap-6 items-center transition-[opacity,transform,max-width] duration-300 ease-out will-change-[opacity,transform,max-width] ${
-              isScrolled 
+              isScrolled && !isCategoryPage 
                 ? 'opacity-0 max-w-0 scale-95 pointer-events-none overflow-hidden' 
                 : 'opacity-100 max-w-[600px] scale-100'
             }`}>
@@ -150,9 +154,9 @@ export default function TopNavBar() {
               <Link to="/products?category=Editorial" className={getLinkClass('Editorial')}>Editorial</Link>
             </div>
 
-            {/* Scrolled Search Bar: occupies the main place when scrolled */}
+            {/* Scrolled Search Bar: occupies the main place when scrolled (only on non-category pages) */}
             <div className={`flex-grow transition-[opacity,transform] duration-300 ease-out will-change-[opacity,transform] ${
-              isScrolled 
+              isScrolled && !isCategoryPage 
                 ? 'opacity-100 translate-x-0 scale-100 w-full' 
                 : 'opacity-0 -translate-x-10 scale-95 pointer-events-none absolute w-0 overflow-hidden'
             }`}>
@@ -224,10 +228,10 @@ export default function TopNavBar() {
         {/* Row 2: Search Bar & Categories with Smooth Fluid Transitions */}
         <div className="w-full flex flex-col items-center overflow-hidden">
           
-          {/* Main Search Bar (Visible ONLY when not scrolled) */}
+          {/* Main Search Bar (Visible ONLY when not scrolled and NOT on category pages) */}
           <div className={`w-full transition-[max-height,opacity,transform,padding,margin] duration-300 ease-out origin-top will-change-[max-height,opacity,transform] ${
-            isScrolled 
-              ? 'opacity-0 max-h-0 -translate-y-4 pointer-events-none overflow-hidden m-0' 
+            isScrolled || isCategoryPage 
+              ? 'opacity-0 max-h-0 -translate-y-4 pointer-events-none overflow-hidden m-0 hidden' 
               : 'opacity-100 max-h-20 translate-y-0 pb-3 pt-1 px-2 sm:px-4'
           }`}>
             <form 
@@ -272,8 +276,8 @@ export default function TopNavBar() {
           {/* Curated Category Buttons: Styled as beautiful uniform circles with labels below when at top, and curved rectangular badges next to each other when scrolled in a single straight line */}
           <div className={`flex items-center transition-[gap,padding,border-color] duration-300 ease-out will-change-[gap,padding] ${
             isScrolled 
-              ? 'flex-nowrap overflow-x-auto no-scrollbar justify-start sm:justify-center gap-2 sm:gap-3.5 pb-2 pt-1.5 border-t border-zinc-100/60 max-w-md mx-auto px-4 w-full' 
-              : 'flex-wrap justify-center gap-5 sm:gap-8 pb-4 pt-1 max-w-lg mx-auto w-full'
+              ? 'flex-nowrap overflow-x-auto no-scrollbar justify-start sm:justify-center gap-2 sm:gap-3.5 pb-1.5 pt-1 border-t border-zinc-100/60 max-w-md mx-auto px-4 w-full' 
+              : 'flex-wrap justify-center gap-5 sm:gap-8 pb-1.5 pt-0.5 max-w-lg mx-auto w-full'
           }`}>
             {/* Mens */}
             <button
@@ -382,7 +386,7 @@ export default function TopNavBar() {
               type="button"
               onClick={() => {
                 setSearchQuery('');
-                navigate('/products?category=Accessories');
+                navigate('/category/Accessories');
               }}
               className={`group cursor-pointer flex-shrink-0 transition-[background-color,padding,border-color,gap,box-shadow] duration-300 ease-out will-change-[background-color,padding] ${
                 isScrolled 
@@ -393,7 +397,7 @@ export default function TopNavBar() {
               <div className={`rounded-full overflow-hidden flex items-center justify-center transition-[width,height,border-color,box-shadow,transform] duration-300 ease-out will-change-[width,height] ${
                 isScrolled 
                   ? 'w-6 h-6 border border-zinc-200 shadow-inner' 
-                  : category?.toLowerCase() === 'accessories' 
+                  : (category?.toLowerCase() === 'accessories' || window.location.pathname.startsWith('/category/Accessories'))
                     ? 'w-14 h-14 sm:w-16 sm:h-16 border-2 border-zinc-900 scale-105 shadow-md shadow-zinc-900/10' 
                     : 'w-14 h-14 sm:w-16 sm:h-16 border border-zinc-200/80 hover:border-zinc-400'
               }`}>
@@ -407,10 +411,11 @@ export default function TopNavBar() {
               <span className={`tracking-widest uppercase font-headline transition-[font-size,color,font-weight] duration-300 ease-out will-change-[font-size,color] ${
                 isScrolled 
                   ? 'text-[8px] sm:text-[9px] font-black text-zinc-800' 
-                  : category?.toLowerCase() === 'accessories' ? 'text-[9px] sm:text-[10px] font-black text-zinc-950' : 'text-[9px] sm:text-[10px] font-bold text-zinc-500 group-hover:text-zinc-900'
+                  : (category?.toLowerCase() === 'accessories' || window.location.pathname.startsWith('/category/Accessories')) ? 'text-[9px] sm:text-[10px] font-black text-zinc-950' : 'text-[9px] sm:text-[10px] font-bold text-zinc-500 group-hover:text-zinc-900'
               }`}>Accessories</span>
             </button>
           </div>
+        </div>
         </div>
       </nav>
 

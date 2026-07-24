@@ -359,59 +359,29 @@ export default function CategoryDirectory() {
   }, [activeDept]);
 
   return (
-    <main className="min-h-screen lg:h-screen lg:overflow-hidden bg-white flex flex-col justify-between pt-16">
+    <main className="min-h-screen lg:h-screen lg:overflow-hidden bg-white flex flex-col justify-between pt-0">
       
       {/* Main Interactive Work Area */}
-      <div className="flex-1 max-w-5xl md:max-w-6xl mx-auto w-full px-4 sm:px-6 py-2 overflow-hidden flex flex-col">
+      <div className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-6 md:px-8 py-0 overflow-hidden flex flex-col">
         <AnimatePresence mode="wait">
           {!selectedSub ? (
             /* ================= MODE 1: OPTIMIZED SINGLE-SCREEN DIRECTORY HUB ================= */
             <motion.div
               key={`${activeDept}-directory`}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="flex-1 flex flex-col gap-4 h-full overflow-y-auto pb-8 pr-1"
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18 }}
+              className="flex-1 flex flex-col gap-1.5 h-full overflow-y-auto pb-6 pr-0.5"
             >
-              {/* Department Title Header Banner & Quick Switcher */}
-              <div className="bg-gradient-to-r from-zinc-900 via-zinc-900 to-zinc-800 text-white p-3.5 sm:p-5 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0 mt-2 border border-zinc-800">
-                <div className="flex items-center gap-3">
-                  <div className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full ${themeAccent.bg} ring-4 ring-white/10 shrink-0`} />
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-white/10 text-white/90">
-                        {activeDept} Department
-                      </span>
-                    </div>
-                    <h1 className="text-base sm:text-lg md:text-xl font-black uppercase tracking-wider font-headline mt-0.5 text-white">
-                      {activeDept === 'Men' && "Men's Collection & Apparels"}
-                      {activeDept === 'Boys' && "Boys' Fashion & Wear"}
-                      {activeDept === 'Kids' && "Kids & Toddler Essentials"}
-                      {activeDept === 'Accessories' && "Accessories, Grooming & Perfumes"}
-                    </h1>
-                  </div>
-                </div>
-
-                {/* Quick Department Switcher Pills */}
-                <div className="flex items-center gap-1.5 bg-black/40 p-1 rounded-xl border border-white/10 overflow-x-auto shrink-0 scrollbar-none">
-                  {DEPARTMENTS.map((dept) => {
-                    const isActive = activeDept === dept;
-                    return (
-                      <button
-                        key={dept}
-                        onClick={() => handleDeptChange(dept)}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer ${
-                          isActive 
-                            ? 'bg-white text-zinc-950 shadow-xs scale-105' 
-                            : 'text-zinc-300 hover:text-white hover:bg-white/10'
-                        }`}
-                      >
-                        {dept}
-                      </button>
-                    );
-                  })}
-                </div>
+              {/* Title Heading - Bold Black Elegant Title without frame */}
+              <div className="pt-1 pb-0 px-0.5 shrink-0">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-zinc-950 font-headline tracking-tight leading-none drop-shadow-2xs">
+                  {activeDept === 'Men' && "Mens Collection"}
+                  {activeDept === 'Boys' && "Boys Fashion"}
+                  {activeDept === 'Kids' && "Kids Corner"}
+                  {activeDept === 'Accessories' && "Accessories Collection"}
+                </h1>
               </div>
 
               {/* 16:9 Branded Hero Offer Carousel Slider */}
@@ -423,37 +393,37 @@ export default function CategoryDirectory() {
               {DEPARTMENT_DATA[activeDept]?.map((group) => (
                 <div 
                   key={group.title} 
-                  className="flex flex-col gap-3"
+                  className="flex flex-col gap-1.5"
                 >
-                  {/* Category Group Heading: Clean typography & No Heavy Borders */}
-                  <div className="flex items-center gap-2 pt-3 pb-0.5 shrink-0">
-                    <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-zinc-950 font-headline">
+                  {/* Category Group Heading: Compact typography */}
+                  <div className="flex items-center gap-2 pt-1 pb-0 shrink-0">
+                    <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-zinc-900 font-headline">
                       {group.title}
                     </span>
-                    <span className="h-px bg-zinc-100 flex-1 ml-2"></span>
+                    <span className="h-px bg-zinc-200/80 flex-1 ml-1.5"></span>
                   </div>
 
-                  {/* Balanced grid: 4 cols on mobile, 5 cols on sm, 6 on md, 8 on lg for full desktop utilization */}
-                  <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-x-2.5 sm:gap-x-4 gap-y-3.5">
+                  {/* Dense, compact grid with minimal white space */}
+                  <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-x-2 sm:gap-x-3 gap-y-2">
                     {group.items.map((item) => (
                       <button
                         key={item.name}
                         onClick={() => setSelectedSub({ parentGroup: group.title, subCategory: item.name })}
-                        className="group flex flex-col items-center p-1.5 hover:bg-zinc-50 rounded-xl transition-all duration-300 w-full cursor-pointer focus:outline-none"
+                        className="group flex flex-col items-center p-1 hover:bg-zinc-100/80 rounded-xl transition-all duration-200 w-full cursor-pointer focus:outline-none"
                       >
                         {/* Compact Perfect Square Model Thumbnail Card */}
-                        <div className="relative aspect-square w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 shrink-0 overflow-hidden bg-zinc-50 rounded-xl border border-zinc-100 shadow-2xs group-hover:scale-105 group-hover:border-zinc-300 transition-all duration-300">
+                        <div className="relative aspect-square w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 shrink-0 overflow-hidden bg-zinc-50 rounded-xl border border-zinc-200/80 shadow-2xs group-hover:scale-105 group-hover:border-zinc-400 transition-all duration-300">
                           <img 
                             src={item.img} 
                             alt={item.name} 
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             referrerPolicy="no-referrer"
                           />
-                          <div className="absolute inset-0 bg-black/[0.03] group-hover:bg-black/0 transition-colors"></div>
+                          <div className="absolute inset-0 bg-black/[0.02] group-hover:bg-black/0 transition-colors"></div>
                         </div>
 
-                        {/* Text Label Below with a Balanced Design */}
-                        <div className="mt-1.5 w-full text-center min-w-0">
+                        {/* Text Label Below */}
+                        <div className="mt-1 w-full text-center min-w-0">
                           <h4 className="text-[9px] sm:text-[10px] md:text-[11px] font-bold text-zinc-800 uppercase tracking-wide truncate group-hover:text-zinc-950 transition-colors leading-tight">
                             {item.name}
                           </h4>
