@@ -8,6 +8,7 @@ import ProductListing from './pages/ProductListing';
 import ProductDetails from './pages/ProductDetails';
 import Checkout from './pages/Checkout';
 import CategoryDirectory from './pages/CategoryDirectory';
+import Orders from './pages/Orders';
 import EffectsCanvas from './components/EffectsCanvas';
 
 export default function App() {
@@ -21,6 +22,8 @@ export default function App() {
           <Route path="/category/:gender" element={<CategoryDirectory />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/my-orders" element={<Orders />} />
         </Routes>
         <Footer />
         <BottomNavBar />

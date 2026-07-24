@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Home, LayoutGrid, Package, User, X, ChevronRight, ShoppingBag, MapPin, Wallet, ArrowRight, Heart, PhoneCall, Trash2, Check, Award } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import shopkeeperImg from '../assets/images/mens_fashion_empty_orders_illustration_1784884242598.jpg';
 
 interface OrderItem {
   id: number;
@@ -54,7 +55,7 @@ export default function BottomNavBar() {
   const currentPath = location.pathname;
   const isHomeActive = currentPath === '/' && activeDrawer === null;
   const isCategoriesActive = activeDrawer === 'categories';
-  const isOrdersActive = activeDrawer === 'orders';
+  const isOrdersActive = currentPath === '/orders' || currentPath === '/my-orders' || activeDrawer === 'orders';
   const isAccountActive = activeDrawer === 'account';
 
   // Helper to handle tab clicks
@@ -63,14 +64,15 @@ export default function BottomNavBar() {
       setActiveDrawer(null);
       navigate('/');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tab === 'orders') {
+      setActiveDrawer(null);
+      navigate('/orders');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       if (activeDrawer === tab) {
         setActiveDrawer(null); // Toggle off
       } else {
         setActiveDrawer(tab);
-        if (tab === 'orders') {
-          loadOrders();
-        }
       }
     }
   };
@@ -155,7 +157,7 @@ export default function BottomNavBar() {
     }
   ];
 
-  const displayedOrders = orders.length > 0 ? orders : mockPastOrders;
+  const displayedOrders = orders;
 
   return (
     <>
@@ -393,7 +395,7 @@ export default function BottomNavBar() {
                 <div className="flex flex-col h-full overflow-hidden">
                   <div className="flex justify-between items-center px-6 pb-4 border-b border-zinc-100">
                     <div>
-                      <h3 className="text-lg font-black tracking-tight text-zinc-900 font-headline uppercase">Purchase History</h3>
+                      <h3 className="text-lg font-black tracking-tight text-zinc-900 font-headline uppercase">MY ORDERS</h3>
                       <p className="text-[11px] text-zinc-400 font-medium">Track shipping and browse previous receipts</p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -414,60 +416,82 @@ export default function BottomNavBar() {
 
                   {/* Orders List viewport container */}
                   <div className="p-6 overflow-y-auto space-y-4 h-[55vh]">
-                    {displayedOrders.map((order, orderIdx) => (
-                      <div key={order.id} className="border border-zinc-150 rounded-2xl bg-zinc-50/20 overflow-hidden shadow-xs hover:border-zinc-300 transition-colors">
-                        {/* Header banner of card */}
-                        <div className="bg-zinc-50 border-b border-zinc-100 px-4 py-3 flex justify-between items-center">
-                          <div>
-                            <span className="text-[9px] uppercase tracking-widest font-extrabold text-zinc-400">Order Reference</span>
-                            <h4 className="text-xs font-black text-zinc-900 font-headline leading-tight mt-0.5">{order.id}</h4>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-[9px] uppercase tracking-widest font-extrabold text-zinc-400">Placed Date</span>
-                            <p className="text-xs font-semibold text-zinc-800 leading-tight mt-0.5">{order.date}</p>
-                          </div>
-                        </div>
-
-                        {/* Status timeline indicator bar */}
-                        <div className="px-4 py-3.5 bg-white border-b border-zinc-100/50 flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className={`w-2.5 h-2.5 rounded-full ${order.status === 'Delivered' ? 'bg-emerald-500' : 'bg-blue-600 animate-pulse'}`}></div>
-                            <span className="text-[11px] font-black uppercase tracking-wider font-headline text-zinc-800">{order.status}</span>
-                          </div>
-                          <div className="text-[10px] text-zinc-500 font-semibold font-body">
-                            Estimated delivery: <span className="font-extrabold text-zinc-900">3-4 business days</span>
-                          </div>
-                        </div>
-
-                        {/* Sub items inside order */}
-                        <div className="p-4 space-y-3.5 bg-white">
-                          {order.items.map((item, itemIdx) => (
-                            <div key={itemIdx} className="flex gap-3">
-                              <div className="w-12 h-14 bg-zinc-100 rounded-lg overflow-hidden border border-zinc-100 flex-shrink-0">
-                                <img src={item.image} alt={item.name} className="w-full h-full object-cover object-center" />
-                              </div>
-                              <div className="flex-grow flex flex-col justify-center min-w-0">
-                                <h5 className="text-[10px] font-black tracking-tight text-zinc-900 uppercase font-headline leading-snug line-clamp-1">{item.name}</h5>
-                                <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mt-0.5">Size: {item.size} • Qty: {item.quantity}</p>
-                                <span className="text-xs font-bold text-zinc-800 mt-1">{item.price}</span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Order Address & Total Invoice footer summary */}
-                        <div className="p-4 bg-zinc-50/60 border-t border-zinc-100 flex flex-col gap-1.5 text-xs">
-                          <div className="flex justify-between items-center">
-                            <span className="text-zinc-500 font-semibold">Total Invoice value:</span>
-                            <span className="font-black text-zinc-900 font-headline">{formatCurrency(order.total)}</span>
-                          </div>
-                          <div className="flex items-start gap-1 text-[10px] text-zinc-400 font-medium leading-relaxed mt-1">
-                            <MapPin size={11} className="shrink-0 text-zinc-400 mt-0.5" />
-                            <span className="line-clamp-1">Deliver to: {order.address}</span>
-                          </div>
-                        </div>
+                    {displayedOrders.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center text-center py-4 my-auto">
+                        <img 
+                          src={shopkeeperImg} 
+                          alt="No Orders Yet" 
+                          className="w-52 h-auto object-contain mx-auto mb-4" 
+                          referrerPolicy="no-referrer"
+                        />
+                        <h4 className="text-sm font-bold text-zinc-900 font-headline mb-1">You haven't placed any orders</h4>
+                        <p className="text-xs text-zinc-500 mb-5">All your orders will appear here</p>
+                        <button
+                          onClick={() => {
+                            closeDrawer();
+                            navigate('/products');
+                          }}
+                          className="bg-[#8e24aa] hover:bg-[#7b1fa2] text-white font-bold text-xs px-6 py-2.5 rounded-lg shadow-md transition-all cursor-pointer uppercase tracking-wider font-headline"
+                        >
+                          View Products
+                        </button>
                       </div>
-                    ))}
+                    ) : (
+                      displayedOrders.map((order) => (
+                        <div key={order.id} className="border border-zinc-150 rounded-2xl bg-zinc-50/20 overflow-hidden shadow-xs hover:border-zinc-300 transition-colors">
+                          {/* Header banner of card */}
+                          <div className="bg-zinc-50 border-b border-zinc-100 px-4 py-3 flex justify-between items-center">
+                            <div>
+                              <span className="text-[9px] uppercase tracking-widest font-extrabold text-zinc-400">Order Reference</span>
+                              <h4 className="text-xs font-black text-zinc-900 font-headline leading-tight mt-0.5">{order.id}</h4>
+                            </div>
+                            <div className="text-right">
+                              <span className="text-[9px] uppercase tracking-widest font-extrabold text-zinc-400">Placed Date</span>
+                              <p className="text-xs font-semibold text-zinc-800 leading-tight mt-0.5">{order.date}</p>
+                            </div>
+                          </div>
+
+                          {/* Status timeline indicator bar */}
+                          <div className="px-4 py-3.5 bg-white border-b border-zinc-100/50 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className={`w-2.5 h-2.5 rounded-full ${order.status === 'Delivered' ? 'bg-emerald-500' : 'bg-blue-600 animate-pulse'}`}></div>
+                              <span className="text-[11px] font-black uppercase tracking-wider font-headline text-zinc-800">{order.status}</span>
+                            </div>
+                            <div className="text-[10px] text-zinc-500 font-semibold font-body">
+                              Estimated delivery: <span className="font-extrabold text-zinc-900">3-4 business days</span>
+                            </div>
+                          </div>
+
+                          {/* Sub items inside order */}
+                          <div className="p-4 space-y-3.5 bg-white">
+                            {order.items.map((item, itemIdx) => (
+                              <div key={itemIdx} className="flex gap-3">
+                                <div className="w-12 h-14 bg-zinc-100 rounded-lg overflow-hidden border border-zinc-100 flex-shrink-0">
+                                  <img src={item.image} alt={item.name} className="w-full h-full object-cover object-center" referrerPolicy="no-referrer" />
+                                </div>
+                                <div className="flex-grow flex flex-col justify-center min-w-0">
+                                  <h5 className="text-[10px] font-black tracking-tight text-zinc-900 uppercase font-headline leading-snug line-clamp-1">{item.name}</h5>
+                                  <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mt-0.5">Size: {item.size} • Qty: {item.quantity}</p>
+                                  <span className="text-xs font-bold text-zinc-800 mt-1">{item.price}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Order Address & Total Invoice footer summary */}
+                          <div className="p-4 bg-zinc-50/60 border-t border-zinc-100 flex flex-col gap-1.5 text-xs">
+                            <div className="flex justify-between items-center">
+                              <span className="text-zinc-500 font-semibold">Total Invoice value:</span>
+                              <span className="font-black text-zinc-900 font-headline">{formatCurrency(order.total)}</span>
+                            </div>
+                            <div className="flex items-start gap-1 text-[10px] text-zinc-400 font-medium leading-relaxed mt-1">
+                              <MapPin size={11} className="shrink-0 text-zinc-400 mt-0.5" />
+                              <span className="line-clamp-1">Deliver to: {order.address}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               )}
