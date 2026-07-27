@@ -521,11 +521,22 @@ export default function OnboardingModal() {
                 transition={{ duration: 0.25 }}
                 className="p-6 flex-1 flex flex-col items-center justify-center text-center space-y-6"
               >
-                {/* Success Icon Badge */}
-                <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner relative">
-                  <Sparkles size={36} />
-                  <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md">
-                    <Check size={16} strokeWidth={3} />
+                {/* GM Fashions Shop Logo Badge */}
+                <div className="relative flex flex-col items-center">
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#dc2626] via-[#b91c1c] to-[#991b1b] text-white flex flex-col items-center justify-center shadow-xl border-4 border-red-100 relative">
+                    {/* GM Monogram Box */}
+                    <div className="w-10 h-10 rounded-2xl bg-white text-[#dc2626] flex items-center justify-center font-black font-headline text-lg shadow-md mb-1">
+                      GM
+                    </div>
+                    {/* Brand Subtitle */}
+                    <span className="text-[9px] font-black tracking-widest font-headline uppercase text-red-100">
+                      FASHIONS
+                    </span>
+                    
+                    {/* Verified Success Check Badge */}
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg border-2 border-white">
+                      <Check size={18} strokeWidth={3} />
+                    </div>
                   </div>
                 </div>
 
@@ -533,7 +544,7 @@ export default function OnboardingModal() {
                   <h2 className="text-xl font-black text-zinc-900 font-headline">
                     {t('welcomeGreeting')}
                   </h2>
-                  <div className="inline-block px-3 py-1 bg-red-50 text-[#dc2626] rounded-full text-xs font-bold font-headline">
+                  <div className="inline-block px-3.5 py-1 bg-red-50 text-[#dc2626] rounded-full text-xs font-bold font-headline border border-red-100">
                     Logged in as: {user.phone}
                   </div>
                   <p className="text-xs sm:text-sm text-zinc-500 max-w-xs mx-auto leading-relaxed">
