@@ -18,11 +18,24 @@ export const LANGUAGE_OPTIONS: LanguageOption[] = [
   { code: 'mr', nativeName: 'मराठी', englishName: 'Marathi', char: 'म' },
 ];
 
+export interface SavedAddressItem {
+  id: string;
+  name: string;
+  phone: string;
+  house: string;
+  area: string;
+  type?: string;
+  isDefault?: boolean;
+}
+
 export interface UserProfile {
   phone: string;
   name: string;
+  email?: string;
+  avatar?: string;
   isLoggedIn: boolean;
   locationPermission?: 'precise' | 'approximate' | 'denied';
+  addresses?: SavedAddressItem[];
 }
 
 // Translations dictionary for key UI components

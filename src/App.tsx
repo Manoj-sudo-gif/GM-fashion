@@ -9,6 +9,7 @@ import ProductDetails from './pages/ProductDetails';
 import Checkout from './pages/Checkout';
 import CategoryDirectory from './pages/CategoryDirectory';
 import Orders from './pages/Orders';
+import Account from './pages/Account';
 import EffectsCanvas from './components/EffectsCanvas';
 import OnboardingModal from './components/OnboardingModal';
 import { LanguageProvider } from './context/LanguageContext';
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/my-orders" element={<Orders />} />
+            <Route path="/account" element={<Account />} />
           </Routes>
           <Footer />
           <BottomNavBar />

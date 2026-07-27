@@ -58,7 +58,7 @@ export default function BottomNavBar() {
   const isHomeActive = currentPath === '/' && activeDrawer === null;
   const isCategoriesActive = activeDrawer === 'categories';
   const isOrdersActive = currentPath === '/orders' || currentPath === '/my-orders' || activeDrawer === 'orders';
-  const isAccountActive = activeDrawer === 'account';
+  const isAccountActive = currentPath === '/account' || activeDrawer === 'account';
 
   // Helper to handle tab clicks
   const handleTabClick = (tab: 'home' | 'categories' | 'orders' | 'account') => {
@@ -69,6 +69,10 @@ export default function BottomNavBar() {
     } else if (tab === 'orders') {
       setActiveDrawer(null);
       navigate('/orders');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tab === 'account') {
+      setActiveDrawer(null);
+      navigate('/account');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       if (activeDrawer === tab) {
