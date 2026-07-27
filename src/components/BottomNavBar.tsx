@@ -562,18 +562,18 @@ export default function BottomNavBar() {
                           closeDrawer();
                           openOnboarding(1);
                         }}
-                        className="flex items-center justify-between p-3.5 bg-blue-50/60 hover:bg-blue-100/60 border border-blue-200/80 rounded-xl cursor-pointer transition-colors shadow-2xs"
+                        className="flex items-center justify-between p-3.5 bg-red-50/60 hover:bg-red-100/60 border border-red-200/80 rounded-xl cursor-pointer transition-colors shadow-2xs"
                       >
                         <div className="flex items-center gap-3">
-                          <Globe size={18} className="text-[#2874f0]" />
+                          <Globe size={18} className="text-[#dc2626]" />
                           <div>
-                            <h5 className="text-[11px] font-black tracking-tight text-[#2874f0] uppercase font-headline">App Language & Login Flow</h5>
-                            <p className="text-[9px] text-blue-600/80 font-semibold font-body leading-none mt-0.5">
+                            <h5 className="text-[11px] font-black tracking-tight text-[#dc2626] uppercase font-headline">App Language & Login Flow</h5>
+                            <p className="text-[9px] text-red-600/80 font-semibold font-body leading-none mt-0.5">
                               Current Language: <span className="uppercase font-bold">{selectedLanguage}</span> • {user.isLoggedIn ? user.phone : 'Not Logged In'}
                             </p>
                           </div>
                         </div>
-                        <ChevronRight size={14} className="text-[#2874f0]" />
+                        <ChevronRight size={14} className="text-[#dc2626]" />
                       </div>
 
                       {/* Item 1 */}

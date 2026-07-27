@@ -204,10 +204,10 @@ export default function TopNavBar() {
             {/* Language Selection Pill Button */}
             <button
               onClick={() => openOnboarding(1)}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 hover:bg-blue-100/80 text-[#2874f0] font-extrabold text-[11px] sm:text-xs transition-all border border-blue-200/80 cursor-pointer shadow-2xs font-headline"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 hover:bg-red-100/80 text-[#dc2626] font-extrabold text-[11px] sm:text-xs transition-all border border-red-200/80 cursor-pointer shadow-2xs font-headline"
               title="Change Language"
             >
-              <Globe size={14} className="text-[#2874f0]" />
+              <Globe size={14} className="text-[#dc2626]" />
               <span className="uppercase">{selectedLanguage}</span>
             </button>
 

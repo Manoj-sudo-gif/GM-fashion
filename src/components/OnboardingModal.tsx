@@ -72,16 +72,16 @@ export default function OnboardingModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-xs p-0 sm:p-4 overflow-y-auto">
-      <div className="relative w-full max-w-md bg-[#2874f0] sm:rounded-3xl shadow-2xl overflow-hidden min-h-screen sm:min-h-[640px] flex flex-col justify-between">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto">
+      <div className="relative w-full max-w-sm sm:max-w-md bg-[#dc2626] rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] my-auto flex flex-col justify-between border border-red-500/20">
         
-        {/* ================= TOP BLUE HEADER ================= */}
-        <div className="bg-[#2874f0] text-white p-4 pt-6 sm:pt-5 flex flex-col shrink-0">
+        {/* ================= TOP RED HEADER ================= */}
+        <div className="bg-[#dc2626] text-white p-4 pt-5 flex flex-col shrink-0 shadow-xs">
           
           {/* Top Logo & Skip button */}
-          <div className="flex items-center justify-between mb-4 px-1">
+          <div className="flex items-center justify-between mb-3.5 px-1">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center font-black font-headline text-[#2874f0] text-sm shadow-md">
+              <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center font-black font-headline text-[#dc2626] text-sm shadow-md">
                 GM
               </div>
               <span className="font-extrabold text-base tracking-wider font-headline text-white uppercase">
@@ -98,7 +98,7 @@ export default function OnboardingModal() {
           </div>
 
           {/* STEP PROGRESS INDICATOR (1. Language -> 2. Login -> 3. Welcome) */}
-          <div className="relative flex items-center justify-between px-6 py-2">
+          <div className="relative flex items-center justify-between px-6 py-1.5">
             {/* Background connecting line */}
             <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-[2px] bg-white/30 z-0" />
 
@@ -109,7 +109,7 @@ export default function OnboardingModal() {
             >
               <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
                 onboardingStep === 1 
-                  ? 'bg-white text-[#2874f0] shadow-md ring-4 ring-white/20' 
+                  ? 'bg-white text-[#dc2626] shadow-md ring-4 ring-white/20' 
                   : onboardingStep > 1 
                     ? 'bg-emerald-400 text-zinc-900' 
                     : 'bg-white/30 text-white'
@@ -130,7 +130,7 @@ export default function OnboardingModal() {
             >
               <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
                 onboardingStep === 2 
-                  ? 'bg-white text-[#2874f0] shadow-md ring-4 ring-white/20' 
+                  ? 'bg-white text-[#dc2626] shadow-md ring-4 ring-white/20' 
                   : onboardingStep > 2 
                     ? 'bg-emerald-400 text-zinc-900' 
                     : 'bg-white/30 text-white'
@@ -151,7 +151,7 @@ export default function OnboardingModal() {
             >
               <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
                 onboardingStep === 3 
-                  ? 'bg-white text-[#2874f0] shadow-md ring-4 ring-white/20' 
+                  ? 'bg-white text-[#dc2626] shadow-md ring-4 ring-white/20' 
                   : 'bg-white/30 text-white'
               }`}>
                 3
@@ -166,7 +166,7 @@ export default function OnboardingModal() {
         </div>
 
         {/* ================= STEP CONTENT AREA (WHITE CONTAINER) ================= */}
-        <div className="flex-1 bg-white rounded-t-3xl sm:rounded-t-3xl overflow-hidden flex flex-col relative text-zinc-900">
+        <div className="flex-1 bg-white rounded-t-3xl overflow-hidden flex flex-col relative text-zinc-900 min-h-0">
           
           <AnimatePresence mode="wait">
             
@@ -195,14 +195,14 @@ export default function OnboardingModal() {
                           onClick={() => handleSelectLanguage(lang.code)}
                           className={`w-full flex items-center justify-between p-3 rounded-2xl border transition-all cursor-pointer ${
                             isSelected 
-                              ? 'border-[#2874f0] bg-blue-50/60 shadow-xs' 
+                              ? 'border-[#dc2626] bg-red-50/60 shadow-xs' 
                               : 'border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50'
                           }`}
                         >
                           <div className="flex items-center gap-3.5">
                             {/* Left square avatar badge */}
                             <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-black text-base transition-colors ${
-                              isSelected ? 'bg-[#2874f0] text-white' : 'bg-blue-50 text-[#2874f0]'
+                              isSelected ? 'bg-[#dc2626] text-white' : 'bg-red-50 text-[#dc2626]'
                             }`}>
                               {lang.char}
                             </div>
@@ -228,7 +228,7 @@ export default function OnboardingModal() {
 
                 {/* Bottom info note */}
                 <div className="mt-6 pt-3 border-t border-zinc-100 flex items-center justify-center gap-2 text-zinc-400 text-xs font-medium">
-                  <Globe size={14} className="text-[#2874f0]" />
+                  <Globe size={14} className="text-[#dc2626]" />
                   <span>Language preference can be changed anytime in Settings</span>
                 </div>
 
@@ -244,19 +244,19 @@ export default function OnboardingModal() {
                       
                       {/* Top Location Icon Badge */}
                       <div className="flex justify-center">
-                        <div className="w-13 h-13 rounded-2xl bg-blue-50 text-[#2874f0] border border-blue-100 flex items-center justify-center shadow-xs">
-                          <MapPin size={26} className="text-[#2874f0] fill-blue-500/20" />
+                        <div className="w-13 h-13 rounded-2xl bg-red-50 text-[#dc2626] border border-red-100 flex items-center justify-center shadow-xs">
+                          <MapPin size={26} className="text-[#dc2626] fill-red-500/20" />
                         </div>
                       </div>
 
                       {/* Heading */}
                       <h3 className="text-base sm:text-lg font-extrabold text-center leading-snug font-headline text-zinc-900 px-1">
-                        Allow <span className="text-[#2874f0]">GM Fashions</span> to access this device's location?
+                        Allow <span className="text-[#dc2626]">GM Fashions</span> to access this device's location?
                       </h3>
 
                       {/* Third Party Notice Box */}
-                      <div className="bg-blue-50/60 rounded-2xl p-3 flex items-center gap-3 text-xs text-zinc-600 border border-blue-100/80">
-                        <Shield size={18} className="shrink-0 text-[#2874f0]" />
+                      <div className="bg-red-50/60 rounded-2xl p-3 flex items-center gap-3 text-xs text-zinc-600 border border-red-100/80">
+                        <Shield size={18} className="shrink-0 text-[#dc2626]" />
                         <span className="flex-1 leading-snug font-medium">
                           This app stated that it may share location data with third parties
                         </span>
@@ -270,16 +270,16 @@ export default function OnboardingModal() {
                           onClick={() => setLocationType('precise')}
                           className={`flex flex-col items-center p-2.5 rounded-2xl border transition-all cursor-pointer ${
                             locationType === 'precise' 
-                              ? 'border-[#2874f0] bg-blue-50/80 ring-2 ring-blue-500/20 shadow-xs' 
+                              ? 'border-[#dc2626] bg-red-50/80 ring-2 ring-red-500/20 shadow-xs' 
                               : 'border-zinc-200 bg-zinc-50/80 hover:bg-zinc-100 opacity-90'
                           }`}
                         >
                           {/* Map graphic mockup */}
-                          <div className="w-20 h-20 rounded-full border border-blue-200 relative overflow-hidden bg-blue-50/50 flex items-center justify-center mb-2 shadow-inner">
+                          <div className="w-20 h-20 rounded-full border border-red-200 relative overflow-hidden bg-red-50/50 flex items-center justify-center mb-2 shadow-inner">
                             {/* Radial grid lines */}
-                            <div className="absolute inset-0 bg-[radial-gradient(#2874f0_1px,transparent_1px)] [background-size:12px_12px] opacity-25" />
+                            <div className="absolute inset-0 bg-[radial-gradient(#dc2626_1px,transparent_1px)] [background-size:12px_12px] opacity-25" />
                             {/* Location Pin */}
-                            <div className="w-7 h-7 rounded-full bg-[#2874f0] text-white flex items-center justify-center shadow-md z-10 animate-bounce">
+                            <div className="w-7 h-7 rounded-full bg-[#dc2626] text-white flex items-center justify-center shadow-md z-10 animate-bounce">
                               <MapPin size={15} className="fill-white" />
                             </div>
                           </div>
@@ -293,7 +293,7 @@ export default function OnboardingModal() {
                           onClick={() => setLocationType('approximate')}
                           className={`flex flex-col items-center p-2.5 rounded-2xl border transition-all cursor-pointer ${
                             locationType === 'approximate' 
-                              ? 'border-[#2874f0] bg-blue-50/80 ring-2 ring-blue-500/20 shadow-xs' 
+                              ? 'border-[#dc2626] bg-red-50/80 ring-2 ring-red-500/20 shadow-xs' 
                               : 'border-zinc-200 bg-zinc-50/80 hover:bg-zinc-100 opacity-90'
                           }`}
                         >
@@ -301,7 +301,7 @@ export default function OnboardingModal() {
                           <div className="w-20 h-20 rounded-full border border-amber-200 relative overflow-hidden bg-amber-50/50 flex items-center justify-center mb-2 shadow-inner">
                             {/* Road network mockup */}
                             <div className="absolute inset-0 border-t-2 border-r-2 border-amber-400/80 top-1/2 -left-2 rotate-12" />
-                            <div className="absolute inset-0 border-b-2 border-blue-400/80 bottom-2 right-1" />
+                            <div className="absolute inset-0 border-b-2 border-red-400/80 bottom-2 right-1" />
                             <div className="w-8 h-8 rounded-full border-2 border-dashed border-amber-500 bg-amber-400/30 flex items-center justify-center z-10">
                               <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                             </div>
@@ -316,7 +316,7 @@ export default function OnboardingModal() {
                       <div className="space-y-2 pt-2">
                         <button
                           onClick={() => handleLocationResponse('while_using')}
-                          className="w-full py-3 bg-[#2874f0] hover:bg-[#1d64ec] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all cursor-pointer text-center font-headline uppercase tracking-wider"
+                          className="w-full py-3 bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all cursor-pointer text-center font-headline uppercase tracking-wider"
                         >
                           While using the app
                         </button>
@@ -361,10 +361,10 @@ export default function OnboardingModal() {
                   <div className="space-y-4">
                     {!useEmailId ? (
                       <div>
-                        <label className="block text-xs font-extrabold text-[#2874f0] uppercase tracking-wider mb-1 font-headline">
+                        <label className="block text-xs font-extrabold text-[#dc2626] uppercase tracking-wider mb-1 font-headline">
                           {t('phoneNumber')}
                         </label>
-                        <div className="flex items-center border-2 border-[#2874f0] rounded-xl px-3 py-2.5 bg-white focus-within:ring-2 focus-within:ring-blue-200">
+                        <div className="flex items-center border-2 border-[#dc2626] rounded-xl px-3 py-2.5 bg-white focus-within:ring-2 focus-within:ring-red-200">
                           <span className="text-sm font-bold text-zinc-800 pr-2 border-r border-zinc-200">
                             +91 ▼
                           </span>
@@ -379,7 +379,7 @@ export default function OnboardingModal() {
                       </div>
                     ) : (
                       <div>
-                        <label className="block text-xs font-extrabold text-[#2874f0] uppercase tracking-wider mb-1 font-headline">
+                        <label className="block text-xs font-extrabold text-[#dc2626] uppercase tracking-wider mb-1 font-headline">
                           Email ID
                         </label>
                         <input
@@ -387,7 +387,7 @@ export default function OnboardingModal() {
                           value={emailInput}
                           onChange={(e) => setEmailInput(e.target.value)}
                           placeholder="example@gmail.com"
-                          className="w-full border-2 border-[#2874f0] rounded-xl px-3 py-2.5 text-sm font-bold text-zinc-900 focus:outline-none bg-white"
+                          className="w-full border-2 border-[#dc2626] rounded-xl px-3 py-2.5 text-sm font-bold text-zinc-900 focus:outline-none bg-white"
                         />
                       </div>
                     )}
@@ -396,7 +396,7 @@ export default function OnboardingModal() {
                     <div className="flex justify-end">
                       <button
                         onClick={() => setUseEmailId(!useEmailId)}
-                        className="text-xs font-bold text-[#2874f0] hover:underline cursor-pointer font-headline"
+                        className="text-xs font-bold text-[#dc2626] hover:underline cursor-pointer font-headline"
                       >
                         {useEmailId ? "Use Phone Number" : t('useEmailId')}
                       </button>
@@ -407,7 +407,7 @@ export default function OnboardingModal() {
                       <button
                         onClick={() => handleProceedLogin(useEmailId ? emailInput : phoneInput)}
                         disabled={isVerifyingOtp}
-                        className="w-full bg-[#2874f0] hover:bg-[#1d64ec] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-md transition-all cursor-pointer uppercase tracking-wider font-headline flex items-center justify-center gap-2 mt-4"
+                        className="w-full bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-md transition-all cursor-pointer uppercase tracking-wider font-headline flex items-center justify-center gap-2 mt-4"
                       >
                         {isVerifyingOtp ? (
                           <>
@@ -440,7 +440,7 @@ export default function OnboardingModal() {
                     <div className="flex items-center justify-between pb-1">
                       <div className="flex items-center gap-3">
                         {/* GM Brand Icon */}
-                        <div className="w-10 h-10 rounded-2xl bg-[#2874f0] text-white flex items-center justify-center font-black font-headline text-base shadow-md">
+                        <div className="w-10 h-10 rounded-2xl bg-[#dc2626] text-white flex items-center justify-center font-black font-headline text-base shadow-md">
                           GM
                         </div>
                         <div>
@@ -458,22 +458,22 @@ export default function OnboardingModal() {
                         onClick={() => setOnboardingStep(1)}
                         className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 text-xs font-bold cursor-pointer transition-colors"
                       >
-                        <Globe size={13} className="text-[#2874f0]" />
+                        <Globe size={13} className="text-[#dc2626]" />
                         <span className="uppercase">{selectedLanguage}</span>
                       </button>
                     </div>
 
                     {/* Detected Active SIM Number Display */}
-                    <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-3.5 flex items-center justify-between">
+                    <div className="bg-red-50/70 border border-red-100 rounded-2xl p-3.5 flex items-center justify-between">
                       <div>
-                        <span className="text-[10px] font-extrabold text-blue-600 uppercase tracking-widest block">
+                        <span className="text-[10px] font-extrabold text-red-600 uppercase tracking-widest block">
                           Verified Mobile SIM
                         </span>
                         <span className="text-base font-black text-zinc-900 font-headline tracking-wide">
                           +91 {phoneInput}
                         </span>
                       </div>
-                      <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                      <div className="w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center">
                         <Check size={16} strokeWidth={3} />
                       </div>
                     </div>
@@ -482,7 +482,7 @@ export default function OnboardingModal() {
                     <button
                       onClick={() => handleProceedLogin(phoneInput)}
                       disabled={isVerifyingOtp}
-                      className="w-full bg-[#1a73e8] hover:bg-[#1557b0] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer uppercase tracking-wider font-headline flex items-center justify-center gap-2 transform active:scale-98"
+                      className="w-full bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer uppercase tracking-wider font-headline flex items-center justify-center gap-2 transform active:scale-98"
                     >
                       {isVerifyingOtp ? (
                         <>
@@ -534,7 +534,7 @@ export default function OnboardingModal() {
                   <h2 className="text-xl font-black text-zinc-900 font-headline">
                     {t('welcomeGreeting')}
                   </h2>
-                  <div className="inline-block px-3 py-1 bg-blue-50 text-[#2874f0] rounded-full text-xs font-bold font-headline">
+                  <div className="inline-block px-3 py-1 bg-red-50 text-[#dc2626] rounded-full text-xs font-bold font-headline">
                     Logged in as: {user.phone}
                   </div>
                   <p className="text-xs sm:text-sm text-zinc-500 max-w-xs mx-auto leading-relaxed">
@@ -545,7 +545,7 @@ export default function OnboardingModal() {
                 {/* Continue Shopping Button */}
                 <button
                   onClick={() => closeOnboarding()}
-                  className="w-full max-w-xs bg-[#2874f0] hover:bg-[#1d64ec] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg transition-all cursor-pointer uppercase tracking-wider font-headline transform active:scale-95"
+                  className="w-full max-w-xs bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg transition-all cursor-pointer uppercase tracking-wider font-headline transform active:scale-95"
                 >
                   {t('continueShopping')}
                 </button>
