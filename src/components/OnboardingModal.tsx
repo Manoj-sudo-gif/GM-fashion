@@ -583,8 +583,8 @@ export default function OnboardingModal() {
                       <PartyPopper size={18} />
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold text-red-600 mt-2 flex items-center gap-1 uppercase tracking-wider font-headline">
-                    <Sparkles size={12} className="animate-spin" /> Click logo to pop party colors!
+                  <span className="text-[10px] font-bold text-red-600 mt-2 flex items-center justify-center gap-1 uppercase tracking-wider font-headline">
+                    Click logo to pop party colors!
                   </span>
                 </div>
 
