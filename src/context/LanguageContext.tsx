@@ -301,16 +301,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     };
   });
 
-  const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(true);
   const [onboardingStep, setOnboardingStep] = useState<number>(1);
 
-  // Trigger onboarding modal on first load if user has not completed onboarding
+  // Always start with onboarding modal open from step 1 (Location & Language -> Login -> Welcome)
   useEffect(() => {
-    const hasCompleted = localStorage.getItem('gm_onboarding_completed');
-    if (!hasCompleted) {
-      setIsOnboardingOpen(true);
-      setOnboardingStep(1);
-    }
+    setIsOnboardingOpen(true);
+    setOnboardingStep(1);
   }, []);
 
   const setSelectedLanguage = (lang: LanguageCode) => {
@@ -344,6 +341,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       isLoggedIn: false
     });
     localStorage.removeItem('gm_user');
+    localStorage.removeItem('gm_onboarding_completed');
+    openOnboarding(1);
   };
 
   return (
