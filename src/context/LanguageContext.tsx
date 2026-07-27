@@ -285,27 +285,18 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return (localStorage.getItem('gm_language') as LanguageCode) || 'ta'; // Default Tamil/English friendly
   });
 
-  const [user, setUser] = useState<UserProfile>(() => {
-    const saved = localStorage.getItem('gm_user');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        // fallback
-      }
-    }
-    return {
-      phone: '+91 7373772390',
-      name: 'GM Fashions User',
-      isLoggedIn: false
-    };
+  const [user, setUser] = useState<UserProfile>({
+    phone: '+91 7373772390',
+    name: 'GM Fashions User',
+    isLoggedIn: false
   });
 
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(true);
   const [onboardingStep, setOnboardingStep] = useState<number>(1);
 
-  // Always start with onboarding modal open from step 1 (Location & Language -> Login -> Welcome) for demo/refresh
+  // Always start with onboarding modal open from step 1 (Location & Language -> Login -> Welcome) on page load/refresh
   useEffect(() => {
+    localStorage.removeItem('gm_user');
     localStorage.removeItem('gm_onboarding_completed');
     setIsOnboardingOpen(true);
     setOnboardingStep(1);
@@ -321,10 +312,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('gm_language', lang);
   };
 
-  useEffect(() => {
-    localStorage.setItem('gm_user', JSON.stringify(user));
-  }, [user]);
-
   const t = (key: string): string => {
     const langDict = TRANSLATIONS[selectedLanguage] || TRANSLATIONS['en'];
     return langDict[key] || TRANSLATIONS['en'][key] || key;
@@ -337,7 +324,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const closeOnboarding = () => {
     setIsOnboardingOpen(false);
-    localStorage.setItem('gm_onboarding_completed', 'true');
   };
 
   const logoutUser = () => {
