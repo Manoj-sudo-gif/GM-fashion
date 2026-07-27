@@ -201,32 +201,6 @@ export default function TopNavBar() {
           </div>
 
           <div className={`flex items-center shrink-0 transition-[gap] duration-300 ${isScrolled ? 'gap-1 sm:gap-2' : 'gap-2 sm:gap-3'}`}>
-            {/* Language Selection Pill Button */}
-            <button
-              onClick={() => openOnboarding(1)}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 hover:bg-red-100/80 text-[#dc2626] font-extrabold text-[11px] sm:text-xs transition-all border border-red-200/80 cursor-pointer shadow-2xs font-headline"
-              title="Change Language"
-            >
-              <Globe size={14} className="text-[#dc2626]" />
-              <span className="uppercase">{selectedLanguage}</span>
-            </button>
-
-            {/* Login / Profile User Button */}
-            <button
-              onClick={() => openOnboarding(user.isLoggedIn ? 3 : 2)}
-              className={`flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-xl transition-all cursor-pointer font-headline text-xs font-bold ${
-                user.isLoggedIn 
-                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100' 
-                  : 'bg-zinc-900 text-white hover:bg-zinc-800 shadow-xs'
-              }`}
-              title={user.isLoggedIn ? `Logged in: ${user.phone}` : "Login / Sign up"}
-            >
-              <User size={16} strokeWidth={2} />
-              <span className="hidden md:inline uppercase tracking-wider text-[11px]">
-                {user.isLoggedIn ? "Account" : t('login')}
-              </span>
-            </button>
-
             {/* Wishlist Button (Heart) */}
             <button 
               onClick={() => setIsWishlistOpen(true)}
