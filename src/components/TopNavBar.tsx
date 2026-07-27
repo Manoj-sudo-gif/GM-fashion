@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, ShoppingBag, Search, User, Camera, X, RefreshCw, Upload, Sparkles, Trash2, Baby, Gamepad2 } from 'lucide-react';
+import { Heart, ShoppingBag, Search, User, Camera, X, RefreshCw, Upload, Sparkles, Trash2, Baby, Gamepad2, Globe } from 'lucide-react';
 import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function TopNavBar() {
+  const { selectedLanguage, t, user, openOnboarding } = useLanguage();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
   const category = searchParams.get('category');
   const currentSearch = searchParams.get('search') || '';
+
 
   const isCategoryPage = location.pathname.startsWith('/category');
 
@@ -197,7 +200,33 @@ export default function TopNavBar() {
             </div>
           </div>
 
-          <div className={`flex items-center shrink-0 transition-[gap] duration-300 ${isScrolled ? 'gap-1 sm:gap-2' : 'gap-2 sm:gap-4'}`}>
+          <div className={`flex items-center shrink-0 transition-[gap] duration-300 ${isScrolled ? 'gap-1 sm:gap-2' : 'gap-2 sm:gap-3'}`}>
+            {/* Language Selection Pill Button */}
+            <button
+              onClick={() => openOnboarding(1)}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 hover:bg-blue-100/80 text-[#2874f0] font-extrabold text-[11px] sm:text-xs transition-all border border-blue-200/80 cursor-pointer shadow-2xs font-headline"
+              title="Change Language"
+            >
+              <Globe size={14} className="text-[#2874f0]" />
+              <span className="uppercase">{selectedLanguage}</span>
+            </button>
+
+            {/* Login / Profile User Button */}
+            <button
+              onClick={() => openOnboarding(user.isLoggedIn ? 3 : 2)}
+              className={`flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-xl transition-all cursor-pointer font-headline text-xs font-bold ${
+                user.isLoggedIn 
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100' 
+                  : 'bg-zinc-900 text-white hover:bg-zinc-800 shadow-xs'
+              }`}
+              title={user.isLoggedIn ? `Logged in: ${user.phone}` : "Login / Sign up"}
+            >
+              <User size={16} strokeWidth={2} />
+              <span className="hidden md:inline uppercase tracking-wider text-[11px]">
+                {user.isLoggedIn ? "Account" : t('login')}
+              </span>
+            </button>
+
             {/* Wishlist Button (Heart) */}
             <button 
               onClick={() => setIsWishlistOpen(true)}
@@ -258,7 +287,7 @@ export default function TopNavBar() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for products, brands and more..."
+                  placeholder={t('searchPlaceholder')}
                   className="w-full bg-transparent text-xs text-zinc-900 focus:outline-none font-body py-1.5 pl-2 pr-2 placeholder-zinc-400 font-medium"
                 />
                 <button 

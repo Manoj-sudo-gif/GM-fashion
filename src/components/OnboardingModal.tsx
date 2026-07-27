@@ -1,0 +1,562 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronRight, Shield, MapPin, Check, Globe, X, Phone, Lock, Sparkles, AlertCircle } from 'lucide-react';
+import { useLanguage, LANGUAGE_OPTIONS, LanguageCode } from '../context/LanguageContext';
+
+export default function OnboardingModal() {
+  const { 
+    selectedLanguage, 
+    setSelectedLanguage, 
+    t, 
+    user, 
+    setUser, 
+    isOnboardingOpen, 
+    onboardingStep, 
+    setOnboardingStep, 
+    closeOnboarding 
+  } = useLanguage();
+
+  // Location permission modal overlay inside Step 1
+  const [showLocationDialog, setShowLocationDialog] = useState<boolean>(true);
+  const [locationType, setLocationType] = useState<'precise' | 'approximate'>('precise');
+
+  // Step 2 Login State
+  const [phoneInput, setPhoneInput] = useState<string>('7373772390');
+  const [showTruecallerSheet, setShowTruecallerSheet] = useState<boolean>(true);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState<boolean>(false);
+  const [useEmailId, setUseEmailId] = useState<boolean>(false);
+  const [emailInput, setEmailInput] = useState<string>('');
+
+  // Reset states when onboarding opens or changes step
+  useEffect(() => {
+    if (isOnboardingOpen) {
+      if (onboardingStep === 1) {
+        setShowLocationDialog(true);
+      } else if (onboardingStep === 2) {
+        setShowTruecallerSheet(true);
+        setIsVerifyingOtp(false);
+      }
+    }
+  }, [isOnboardingOpen, onboardingStep]);
+
+  if (!isOnboardingOpen) return null;
+
+  // Location handler
+  const handleLocationResponse = (action: 'while_using' | 'only_once' | 'dont_allow') => {
+    setShowLocationDialog(false);
+    setUser(prev => ({
+      ...prev,
+      locationPermission: action === 'dont_allow' ? 'denied' : locationType
+    }));
+  };
+
+  // Language choice handler
+  const handleSelectLanguage = (code: LanguageCode) => {
+    setSelectedLanguage(code);
+    // Smoothly transition to Step 2
+    setOnboardingStep(2);
+  };
+
+  // Handle One-Tap Login (Proceed)
+  const handleProceedLogin = (phoneNum: string = phoneInput) => {
+    setIsVerifyingOtp(true);
+    setTimeout(() => {
+      setIsVerifyingOtp(false);
+      setUser(prev => ({
+        ...prev,
+        phone: phoneNum.startsWith('+91') ? phoneNum : `+91 ${phoneNum}`,
+        isLoggedIn: true
+      }));
+      setOnboardingStep(3); // Advance to Welcome Step 3
+    }, 1200);
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-xs p-0 sm:p-4 overflow-y-auto">
+      <div className="relative w-full max-w-md bg-[#2874f0] sm:rounded-3xl shadow-2xl overflow-hidden min-h-screen sm:min-h-[640px] flex flex-col justify-between">
+        
+        {/* ================= TOP BLUE HEADER ================= */}
+        <div className="bg-[#2874f0] text-white p-4 pt-6 sm:pt-5 flex flex-col shrink-0">
+          
+          {/* Top Logo & Skip button */}
+          <div className="flex items-center justify-between mb-4 px-1">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center font-black font-headline text-[#2874f0] text-sm shadow-md">
+                GM
+              </div>
+              <span className="font-extrabold text-base tracking-wider font-headline text-white uppercase">
+                GM Fashions
+              </span>
+            </div>
+
+            <button
+              onClick={() => closeOnboarding()}
+              className="text-xs font-bold text-white/90 hover:text-white px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 transition-all cursor-pointer font-headline tracking-wider uppercase"
+            >
+              {t('skip')}
+            </button>
+          </div>
+
+          {/* STEP PROGRESS INDICATOR (1. Language -> 2. Login -> 3. Welcome) */}
+          <div className="relative flex items-center justify-between px-6 py-2">
+            {/* Background connecting line */}
+            <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-[2px] bg-white/30 z-0" />
+
+            {/* Step 1: Language */}
+            <div 
+              onClick={() => setOnboardingStep(1)}
+              className="relative z-10 flex flex-col items-center gap-1 cursor-pointer group"
+            >
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
+                onboardingStep === 1 
+                  ? 'bg-white text-[#2874f0] shadow-md ring-4 ring-white/20' 
+                  : onboardingStep > 1 
+                    ? 'bg-emerald-400 text-zinc-900' 
+                    : 'bg-white/30 text-white'
+              }`}>
+                {onboardingStep > 1 ? <Check size={14} strokeWidth={3} /> : '1'}
+              </div>
+              <span className={`text-[10px] font-bold tracking-tight font-headline ${
+                onboardingStep === 1 ? 'text-white' : 'text-white/70'
+              }`}>
+                {t('language')}
+              </span>
+            </div>
+
+            {/* Step 2: Login */}
+            <div 
+              onClick={() => { if (user.isLoggedIn || onboardingStep >= 2) setOnboardingStep(2); }}
+              className="relative z-10 flex flex-col items-center gap-1 cursor-pointer group"
+            >
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
+                onboardingStep === 2 
+                  ? 'bg-white text-[#2874f0] shadow-md ring-4 ring-white/20' 
+                  : onboardingStep > 2 
+                    ? 'bg-emerald-400 text-zinc-900' 
+                    : 'bg-white/30 text-white'
+              }`}>
+                {onboardingStep > 2 ? <Check size={14} strokeWidth={3} /> : '2'}
+              </div>
+              <span className={`text-[10px] font-bold tracking-tight font-headline ${
+                onboardingStep === 2 ? 'text-white' : 'text-white/70'
+              }`}>
+                {t('login')}
+              </span>
+            </div>
+
+            {/* Step 3: Welcome */}
+            <div 
+              onClick={() => { if (user.isLoggedIn) setOnboardingStep(3); }}
+              className="relative z-10 flex flex-col items-center gap-1 cursor-pointer group"
+            >
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
+                onboardingStep === 3 
+                  ? 'bg-white text-[#2874f0] shadow-md ring-4 ring-white/20' 
+                  : 'bg-white/30 text-white'
+              }`}>
+                3
+              </div>
+              <span className={`text-[10px] font-bold tracking-tight font-headline ${
+                onboardingStep === 3 ? 'text-white' : 'text-white/70'
+              }`}>
+                {t('welcome')}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* ================= STEP CONTENT AREA (WHITE CONTAINER) ================= */}
+        <div className="flex-1 bg-white rounded-t-3xl sm:rounded-t-3xl overflow-hidden flex flex-col relative text-zinc-900">
+          
+          <AnimatePresence mode="wait">
+            
+            {/* ================= STEP 1: LANGUAGE SELECTION ================= */}
+            {onboardingStep === 1 && (
+              <motion.div
+                key="step-1"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.25 }}
+                className="p-5 flex-1 flex flex-col justify-between overflow-y-auto relative"
+              >
+                <div>
+                  <h2 className="text-base sm:text-lg font-bold text-zinc-900 font-headline mb-4 leading-snug">
+                    {t('selectLanguageTitle')}
+                  </h2>
+
+                  {/* Language Grid / List */}
+                  <div className="space-y-2.5">
+                    {LANGUAGE_OPTIONS.map((lang) => {
+                      const isSelected = selectedLanguage === lang.code;
+                      return (
+                        <button
+                          key={lang.code}
+                          onClick={() => handleSelectLanguage(lang.code)}
+                          className={`w-full flex items-center justify-between p-3 rounded-2xl border transition-all cursor-pointer ${
+                            isSelected 
+                              ? 'border-[#2874f0] bg-blue-50/60 shadow-xs' 
+                              : 'border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3.5">
+                            {/* Left square avatar badge */}
+                            <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-black text-base transition-colors ${
+                              isSelected ? 'bg-[#2874f0] text-white' : 'bg-blue-50 text-[#2874f0]'
+                            }`}>
+                              {lang.char}
+                            </div>
+                            
+                            <div className="text-left">
+                              <h3 className="text-sm font-bold text-zinc-900 font-headline leading-tight">
+                                {lang.nativeName}
+                              </h3>
+                              {lang.nativeName !== lang.englishName && (
+                                <p className="text-xs font-medium text-zinc-400 mt-0.5">
+                                  {lang.englishName}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          <ChevronRight size={18} className="text-zinc-400" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Bottom info note */}
+                <div className="mt-6 pt-3 border-t border-zinc-100 flex items-center justify-center gap-2 text-zinc-400 text-xs font-medium">
+                  <Globe size={14} className="text-[#2874f0]" />
+                  <span>Language preference can be changed anytime in Settings</span>
+                </div>
+
+                {/* OVERLAY: LOCATION PERMISSION DIALOG (EXACT FLIPKART / ANDROID NATIVE STYLE) */}
+                {showLocationDialog && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 z-30"
+                  >
+                    <div className="w-full bg-[#1b1f23] text-white rounded-3xl p-5 shadow-2xl border border-zinc-800 space-y-4 max-h-[92%] overflow-y-auto">
+                      
+                      {/* Top Location Icon */}
+                      <div className="flex justify-center">
+                        <div className="w-12 h-12 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center">
+                          <MapPin size={24} className="text-blue-500 fill-blue-500/20" />
+                        </div>
+                      </div>
+
+                      {/* Heading */}
+                      <h3 className="text-base sm:text-lg font-bold text-center leading-snug font-headline text-white px-2">
+                        Allow <span className="text-blue-400 font-extrabold">GM Fashions</span> to access this device's location?
+                      </h3>
+
+                      {/* Third Party Notice Box */}
+                      <div className="bg-[#2a2f35] rounded-2xl p-3 flex items-center gap-3 text-xs text-zinc-300 border border-zinc-700/60">
+                        <Shield size={18} className="shrink-0 text-blue-400" />
+                        <span className="flex-1 leading-snug">
+                          This app stated that it may share location data with third parties
+                        </span>
+                        <ChevronRight size={16} className="text-zinc-400 shrink-0" />
+                      </div>
+
+                      {/* Map Options Selection (Precise vs Approximate) */}
+                      <div className="grid grid-cols-2 gap-3 pt-1">
+                        {/* Precise Option */}
+                        <div
+                          onClick={() => setLocationType('precise')}
+                          className={`flex flex-col items-center p-2.5 rounded-2xl border transition-all cursor-pointer ${
+                            locationType === 'precise' 
+                              ? 'border-blue-500 bg-blue-500/10 ring-2 ring-blue-500/30' 
+                              : 'border-zinc-700 bg-[#252a30] opacity-80'
+                          }`}
+                        >
+                          {/* Map graphic mockup */}
+                          <div className="w-20 h-20 rounded-full border-2 border-zinc-600 relative overflow-hidden bg-zinc-800 flex items-center justify-center mb-2 shadow-inner">
+                            {/* Radial grid lines */}
+                            <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:12px_12px] opacity-40" />
+                            {/* Location Pin */}
+                            <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg z-10 animate-bounce">
+                              <MapPin size={14} className="fill-white" />
+                            </div>
+                          </div>
+                          <span className="text-xs font-bold font-headline text-white">
+                            {t('precise')}
+                          </span>
+                        </div>
+
+                        {/* Approximate Option */}
+                        <div
+                          onClick={() => setLocationType('approximate')}
+                          className={`flex flex-col items-center p-2.5 rounded-2xl border transition-all cursor-pointer ${
+                            locationType === 'approximate' 
+                              ? 'border-blue-500 bg-blue-500/10 ring-2 ring-blue-500/30' 
+                              : 'border-zinc-700 bg-[#252a30] opacity-80'
+                          }`}
+                        >
+                          {/* Map graphic mockup */}
+                          <div className="w-20 h-20 rounded-full border-2 border-zinc-600 relative overflow-hidden bg-zinc-800 flex items-center justify-center mb-2 shadow-inner">
+                            {/* Road network mockup */}
+                            <div className="absolute inset-0 border-t-2 border-r-2 border-amber-500/60 top-1/2 -left-2 rotate-12" />
+                            <div className="absolute inset-0 border-b-2 border-blue-400/60 bottom-2 right-1" />
+                            <div className="w-8 h-8 rounded-full border-2 border-dashed border-amber-400 bg-amber-400/20 flex items-center justify-center z-10">
+                              <div className="w-2 h-2 rounded-full bg-amber-400" />
+                            </div>
+                          </div>
+                          <span className="text-xs font-bold font-headline text-white">
+                            {t('approximate')}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Action Option Buttons */}
+                      <div className="space-y-2 pt-2">
+                        <button
+                          onClick={() => handleLocationResponse('while_using')}
+                          className="w-full py-3 bg-[#2a2f35] hover:bg-[#343a42] text-white font-bold text-xs sm:text-sm rounded-2xl transition-all cursor-pointer text-center"
+                        >
+                          {t('whileUsingApp')}
+                        </button>
+
+                        <button
+                          onClick={() => handleLocationResponse('only_once')}
+                          className="w-full py-3 bg-[#2a2f35] hover:bg-[#343a42] text-white font-bold text-xs sm:text-sm rounded-2xl transition-all cursor-pointer text-center"
+                        >
+                          {t('onlyThisTime')}
+                        </button>
+
+                        <button
+                          onClick={() => handleLocationResponse('dont_allow')}
+                          className="w-full py-3 bg-transparent hover:bg-zinc-800/60 text-zinc-400 font-bold text-xs sm:text-sm rounded-2xl transition-all cursor-pointer text-center"
+                        >
+                          {t('dontAllow')}
+                        </button>
+                      </div>
+
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+
+            {/* ================= STEP 2: LOGIN SCREEN & TRUECALLER BOTTOM SHEET ================= */}
+            {onboardingStep === 2 && (
+              <motion.div
+                key="step-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.25 }}
+                className="p-5 flex-1 flex flex-col justify-between overflow-y-auto relative"
+              >
+                <div>
+                  <h2 className="text-base sm:text-lg font-bold text-zinc-900 font-headline mb-5">
+                    {t('loginToGetStarted')}
+                  </h2>
+
+                  {/* Phone / Email Input Form */}
+                  <div className="space-y-4">
+                    {!useEmailId ? (
+                      <div>
+                        <label className="block text-xs font-extrabold text-[#2874f0] uppercase tracking-wider mb-1 font-headline">
+                          {t('phoneNumber')}
+                        </label>
+                        <div className="flex items-center border-2 border-[#2874f0] rounded-xl px-3 py-2.5 bg-white focus-within:ring-2 focus-within:ring-blue-200">
+                          <span className="text-sm font-bold text-zinc-800 pr-2 border-r border-zinc-200">
+                            +91 ▼
+                          </span>
+                          <input
+                            type="tel"
+                            value={phoneInput}
+                            onChange={(e) => setPhoneInput(e.target.value)}
+                            placeholder="Enter 10 digit number"
+                            className="w-full pl-3 text-sm font-bold text-zinc-900 focus:outline-none"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <label className="block text-xs font-extrabold text-[#2874f0] uppercase tracking-wider mb-1 font-headline">
+                          Email ID
+                        </label>
+                        <input
+                          type="email"
+                          value={emailInput}
+                          onChange={(e) => setEmailInput(e.target.value)}
+                          placeholder="example@gmail.com"
+                          className="w-full border-2 border-[#2874f0] rounded-xl px-3 py-2.5 text-sm font-bold text-zinc-900 focus:outline-none bg-white"
+                        />
+                      </div>
+                    )}
+
+                    {/* Toggle Link */}
+                    <div className="flex justify-end">
+                      <button
+                        onClick={() => setUseEmailId(!useEmailId)}
+                        className="text-xs font-bold text-[#2874f0] hover:underline cursor-pointer font-headline"
+                      >
+                        {useEmailId ? "Use Phone Number" : t('useEmailId')}
+                      </button>
+                    </div>
+
+                    {/* Manual submit button if sheet dismissed */}
+                    {!showTruecallerSheet && (
+                      <button
+                        onClick={() => handleProceedLogin(useEmailId ? emailInput : phoneInput)}
+                        disabled={isVerifyingOtp}
+                        className="w-full bg-[#2874f0] hover:bg-[#1d64ec] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-md transition-all cursor-pointer uppercase tracking-wider font-headline flex items-center justify-center gap-2 mt-4"
+                      >
+                        {isVerifyingOtp ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            <span>{t('verifyOtp')}</span>
+                          </>
+                        ) : (
+                          <span>Continue</span>
+                        )}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Terms & Privacy Note */}
+                  <p className="text-[11px] text-zinc-400 font-medium leading-relaxed mt-6">
+                    {t('termsAgreement')}
+                  </p>
+                </div>
+
+                {/* OVERLAY: TRUECALLER / SMART ONE-TAP LOGIN BOTTOM SHEET */}
+                {showTruecallerSheet && (
+                  <motion.div
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                    className="absolute inset-x-0 bottom-0 bg-white rounded-t-3xl border-t border-zinc-200 shadow-[0_-10px_40px_rgba(0,0,0,0.18)] p-5 z-20 space-y-4"
+                  >
+                    {/* Top Row: App Brand & Language Badge */}
+                    <div className="flex items-center justify-between pb-1">
+                      <div className="flex items-center gap-3">
+                        {/* GM Brand Icon */}
+                        <div className="w-10 h-10 rounded-2xl bg-[#2874f0] text-white flex items-center justify-center font-black font-headline text-base shadow-md">
+                          GM
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-bold text-zinc-900 font-headline leading-tight">
+                            {t('loginToGmFashions')}
+                          </h3>
+                          <p className="text-xs font-semibold text-zinc-500">
+                            GM Fashions
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Language indicator pill */}
+                      <button
+                        onClick={() => setOnboardingStep(1)}
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 text-xs font-bold cursor-pointer transition-colors"
+                      >
+                        <Globe size={13} className="text-[#2874f0]" />
+                        <span className="uppercase">{selectedLanguage}</span>
+                      </button>
+                    </div>
+
+                    {/* Detected Active SIM Number Display */}
+                    <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-3.5 flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-extrabold text-blue-600 uppercase tracking-widest block">
+                          Verified Mobile SIM
+                        </span>
+                        <span className="text-base font-black text-zinc-900 font-headline tracking-wide">
+                          +91 {phoneInput}
+                        </span>
+                      </div>
+                      <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                        <Check size={16} strokeWidth={3} />
+                      </div>
+                    </div>
+
+                    {/* Primary Button: PROCEED */}
+                    <button
+                      onClick={() => handleProceedLogin(phoneInput)}
+                      disabled={isVerifyingOtp}
+                      className="w-full bg-[#1a73e8] hover:bg-[#1557b0] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer uppercase tracking-wider font-headline flex items-center justify-center gap-2 transform active:scale-98"
+                    >
+                      {isVerifyingOtp ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Auto-Verifying OTP...</span>
+                        </>
+                      ) : (
+                        <span>{t('proceed')}</span>
+                      )}
+                    </button>
+
+                    {/* Secondary Button: USE ANOTHER MOBILE NUMBER */}
+                    <button
+                      onClick={() => setShowTruecallerSheet(false)}
+                      className="w-full py-2 text-xs font-extrabold text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-wider font-headline cursor-pointer text-center"
+                    >
+                      {t('useAnotherNumber')}
+                    </button>
+
+                    {/* Bottom Fine Print */}
+                    <p className="text-[10px] text-zinc-400 font-medium text-center leading-relaxed border-t border-zinc-100 pt-3">
+                      {t('truecallerDisclaimer')}
+                    </p>
+                  </motion.div>
+                )}
+
+              </motion.div>
+            )}
+
+            {/* ================= STEP 3: WELCOME & COMPLETION ================= */}
+            {onboardingStep === 3 && (
+              <motion.div
+                key="step-3"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.25 }}
+                className="p-6 flex-1 flex flex-col items-center justify-center text-center space-y-6"
+              >
+                {/* Success Icon Badge */}
+                <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner relative">
+                  <Sparkles size={36} />
+                  <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md">
+                    <Check size={16} strokeWidth={3} />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <h2 className="text-xl font-black text-zinc-900 font-headline">
+                    {t('welcomeGreeting')}
+                  </h2>
+                  <div className="inline-block px-3 py-1 bg-blue-50 text-[#2874f0] rounded-full text-xs font-bold font-headline">
+                    Logged in as: {user.phone}
+                  </div>
+                  <p className="text-xs sm:text-sm text-zinc-500 max-w-xs mx-auto leading-relaxed">
+                    {t('welcomeSubText')}
+                  </p>
+                </div>
+
+                {/* Continue Shopping Button */}
+                <button
+                  onClick={() => closeOnboarding()}
+                  className="w-full max-w-xs bg-[#2874f0] hover:bg-[#1d64ec] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg transition-all cursor-pointer uppercase tracking-wider font-headline transform active:scale-95"
+                >
+                  {t('continueShopping')}
+                </button>
+              </motion.div>
+            )}
+
+          </AnimatePresence>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}

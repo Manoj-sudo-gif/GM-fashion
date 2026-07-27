@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Home, LayoutGrid, Package, User, X, ChevronRight, ShoppingBag, MapPin, Wallet, ArrowRight, Heart, PhoneCall, Trash2, Check, Award } from 'lucide-react';
+import { Home, LayoutGrid, Package, User, X, ChevronRight, ShoppingBag, MapPin, Wallet, ArrowRight, Heart, PhoneCall, Trash2, Check, Award, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import shopkeeperImg from '../assets/images/mens_fashion_empty_orders_illustration_1784884242598.jpg';
+import { useLanguage } from '../context/LanguageContext';
 
 interface OrderItem {
   id: number;
@@ -27,6 +28,7 @@ interface Order {
 export default function BottomNavBar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { selectedLanguage, t, user, openOnboarding } = useLanguage();
 
   // State for slide-up drawers
   const [activeDrawer, setActiveDrawer] = useState<'categories' | 'orders' | 'account' | null>(null);
@@ -554,6 +556,26 @@ export default function BottomNavBar() {
 
                     {/* List items settings options */}
                     <div className="space-y-1.5 border-t border-zinc-100 pt-4">
+                      {/* Onboarding / Language & Login Flow Tile */}
+                      <div 
+                        onClick={() => {
+                          closeDrawer();
+                          openOnboarding(1);
+                        }}
+                        className="flex items-center justify-between p-3.5 bg-blue-50/60 hover:bg-blue-100/60 border border-blue-200/80 rounded-xl cursor-pointer transition-colors shadow-2xs"
+                      >
+                        <div className="flex items-center gap-3">
+                          <Globe size={18} className="text-[#2874f0]" />
+                          <div>
+                            <h5 className="text-[11px] font-black tracking-tight text-[#2874f0] uppercase font-headline">App Language & Login Flow</h5>
+                            <p className="text-[9px] text-blue-600/80 font-semibold font-body leading-none mt-0.5">
+                              Current Language: <span className="uppercase font-bold">{selectedLanguage}</span> • {user.isLoggedIn ? user.phone : 'Not Logged In'}
+                            </p>
+                          </div>
+                        </div>
+                        <ChevronRight size={14} className="text-[#2874f0]" />
+                      </div>
+
                       {/* Item 1 */}
                       <div className="flex items-center justify-between p-3.5 bg-white hover:bg-zinc-50 border border-zinc-150/70 rounded-xl cursor-pointer transition-colors shadow-2xs">
                         <div className="flex items-center gap-3">

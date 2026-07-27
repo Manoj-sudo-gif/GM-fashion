@@ -10,25 +10,31 @@ import Checkout from './pages/Checkout';
 import CategoryDirectory from './pages/CategoryDirectory';
 import Orders from './pages/Orders';
 import EffectsCanvas from './components/EffectsCanvas';
+import OnboardingModal from './components/OnboardingModal';
+import { LanguageProvider } from './context/LanguageContext';
 
 export default function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-white text-zinc-900 font-body selection:bg-blue-600/20 selection:text-blue-600 antialiased overflow-x-clip flex flex-col pb-16 md:pb-0">
-        <TopNavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<ProductListing />} />
-          <Route path="/category/:gender" element={<CategoryDirectory />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/my-orders" element={<Orders />} />
-        </Routes>
-        <Footer />
-        <BottomNavBar />
-        <EffectsCanvas />
-      </div>
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <div className="min-h-screen bg-white text-zinc-900 font-body selection:bg-blue-600/20 selection:text-blue-600 antialiased overflow-x-clip flex flex-col pb-16 md:pb-0">
+          <TopNavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<ProductListing />} />
+            <Route path="/category/:gender" element={<CategoryDirectory />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/my-orders" element={<Orders />} />
+          </Routes>
+          <Footer />
+          <BottomNavBar />
+          <EffectsCanvas />
+          <OnboardingModal />
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
+
