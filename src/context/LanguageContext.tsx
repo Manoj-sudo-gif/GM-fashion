@@ -304,10 +304,16 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(true);
   const [onboardingStep, setOnboardingStep] = useState<number>(1);
 
-  // Always start with onboarding modal open from step 1 (Location & Language -> Login -> Welcome)
+  // Always start with onboarding modal open from step 1 (Location & Language -> Login -> Welcome) for demo/refresh
   useEffect(() => {
+    localStorage.removeItem('gm_onboarding_completed');
     setIsOnboardingOpen(true);
     setOnboardingStep(1);
+    setUser({
+      phone: '+91 7373772390',
+      name: 'GM Fashions User',
+      isLoggedIn: false
+    });
   }, []);
 
   const setSelectedLanguage = (lang: LanguageCode) => {
