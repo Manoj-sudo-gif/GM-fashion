@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, SlidersHorizontal, Trash2, MapPin, Package, ArrowRight, X, Check, Filter } from 'lucide-react';
+import { Search, SlidersHorizontal, Trash2, MapPin, Package, ArrowRight, X, Check, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import shopkeeperImg from '../assets/images/mens_fashion_empty_orders_illustration_1784884242598.jpg';
 
@@ -51,6 +51,7 @@ export default function Orders() {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     loadOrders();
     
     // Listen for storage changes if order completed in another tab/window
@@ -92,25 +93,43 @@ export default function Orders() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 pb-20 pt-2 sm:pt-4">
-      <div className="max-w-2xl mx-auto w-full px-4 flex flex-col min-h-[85vh]">
-        
-        {/* HEADER BAR: "MY ORDERS" */}
-        <div className="py-3 px-1 border-b border-zinc-200/80 mb-3 flex items-center justify-between">
-          <h1 className="text-sm sm:text-base font-extrabold tracking-wider text-zinc-900 font-headline uppercase">
-            MY ORDERS
-          </h1>
-          {orders.length > 0 && (
-            <button
-              onClick={handleClearHistory}
-              className="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1 cursor-pointer transition-colors"
-              title="Clear Order History"
-            >
-              <Trash2 size={14} />
-              <span>Clear History</span>
-            </button>
-          )}
+    <div className="min-h-screen bg-zinc-50/80 text-zinc-900 pb-20">
+      
+      {/* TOP STICKY HEADER */}
+      <div className="sticky top-0 z-40 bg-white/95 border-b border-zinc-200/90 px-4 py-3.5 flex items-center justify-between shadow-2xs backdrop-blur-md">
+        <div className="flex items-center gap-2.5">
+          <button 
+            onClick={() => navigate('/')} 
+            className="p-1.5 -ml-1.5 rounded-full hover:bg-zinc-100 text-zinc-800 transition-colors cursor-pointer"
+            aria-label="Home"
+            title="Back to Home"
+          >
+            <ChevronLeft size={22} strokeWidth={2.5} />
+          </button>
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#dc2626] to-[#991b1b] text-white flex items-center justify-center font-black font-headline text-xs tracking-tighter shadow-2xs">
+            GM
+          </div>
+          <div>
+            <h1 className="text-sm sm:text-base font-black text-zinc-900 font-headline uppercase tracking-wide leading-none">
+              My Orders
+            </h1>
+            <p className="text-[10px] text-zinc-400 font-medium">GM Fashions Track & Receipts</p>
+          </div>
         </div>
+
+        {orders.length > 0 && (
+          <button
+            onClick={handleClearHistory}
+            className="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2.5 py-1 rounded-lg flex items-center gap-1 cursor-pointer transition-colors"
+            title="Clear Order History"
+          >
+            <Trash2 size={14} />
+            <span>Clear History</span>
+          </button>
+        )}
+      </div>
+
+      <div className="max-w-2xl mx-auto w-full px-3 sm:px-4 flex flex-col min-h-[85vh] pt-3 sm:pt-5">
 
         {/* TOP CONTROL BAR: SEARCH AND FILTERS */}
         <div className="flex items-center gap-3 mb-6">

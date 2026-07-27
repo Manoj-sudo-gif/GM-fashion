@@ -123,7 +123,7 @@ export default function TopNavBar() {
     }
   };
 
-  if (location.pathname === '/account') {
+  if (location.pathname === '/account' || location.pathname === '/orders' || location.pathname === '/my-orders') {
     return null;
   }
 

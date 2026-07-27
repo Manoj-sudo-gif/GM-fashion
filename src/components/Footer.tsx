@@ -5,7 +5,7 @@ import { Instagram, Facebook, Twitter, Youtube, ArrowUpRight } from 'lucide-reac
 export default function Footer() {
   const location = useLocation();
 
-  if (location.pathname === '/account') {
+  if (location.pathname === '/account' || location.pathname === '/orders' || location.pathname === '/my-orders') {
     return null;
   }
 
