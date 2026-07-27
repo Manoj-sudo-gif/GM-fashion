@@ -106,9 +106,6 @@ export default function Orders() {
           >
             <ChevronLeft size={22} strokeWidth={2.5} />
           </button>
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#dc2626] to-[#991b1b] text-white flex items-center justify-center font-black font-headline text-xs tracking-tighter shadow-2xs">
-            GM
-          </div>
           <div>
             <h1 className="text-sm sm:text-base font-black text-zinc-900 font-headline uppercase tracking-wide leading-none">
               My Orders

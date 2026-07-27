@@ -245,9 +245,6 @@ export default function Account() {
       {view === 'main' ? (
         <div className="sticky top-0 z-40 bg-white/95 border-b border-zinc-200/90 px-4 py-3.5 flex items-center justify-between shadow-2xs backdrop-blur-md">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#dc2626] to-[#991b1b] text-white flex items-center justify-center font-black font-headline text-xs tracking-tighter shadow-2xs">
-              GM
-            </div>
             <div>
               <h1 className="text-sm sm:text-base font-black text-zinc-900 font-headline uppercase tracking-wide leading-none">
                 My Account
