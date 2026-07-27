@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ChevronLeft, ChevronRight, User, Package, Heart, Tag, Headset, 
@@ -86,6 +86,11 @@ export default function Account() {
   // Selected Language State inside select-language view
   const [tempLang, setTempLang] = useState<LanguageCode>(selectedLanguage);
   const [langSavedSuccess, setLangSavedSuccess] = useState<boolean>(false);
+
+  // Scroll to top automatically whenever view changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [view]);
 
   // Coupon copy toast
   const [copiedCoupon, setCopiedCoupon] = useState<string | null>(null);
