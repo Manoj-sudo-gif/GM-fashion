@@ -119,7 +119,7 @@ export default function OnboardingModal() {
               <span className={`text-[10px] font-bold tracking-tight font-headline ${
                 onboardingStep === 1 ? 'text-white' : 'text-white/70'
               }`}>
-                {t('language')}
+                Language
               </span>
             </div>
 
@@ -140,7 +140,7 @@ export default function OnboardingModal() {
               <span className={`text-[10px] font-bold tracking-tight font-headline ${
                 onboardingStep === 2 ? 'text-white' : 'text-white/70'
               }`}>
-                {t('login')}
+                Login
               </span>
             </div>
 
@@ -159,7 +159,7 @@ export default function OnboardingModal() {
               <span className={`text-[10px] font-bold tracking-tight font-headline ${
                 onboardingStep === 3 ? 'text-white' : 'text-white/70'
               }`}>
-                {t('welcome')}
+                Welcome
               </span>
             </div>
           </div>
@@ -232,32 +232,32 @@ export default function OnboardingModal() {
                   <span>Language preference can be changed anytime in Settings</span>
                 </div>
 
-                {/* OVERLAY: LOCATION PERMISSION DIALOG (EXACT FLIPKART / ANDROID NATIVE STYLE) */}
+                {/* OVERLAY: LOCATION PERMISSION DIALOG (WHITE THEME - ENGLISH) */}
                 {showLocationDialog && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 z-30"
+                    className="absolute inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 z-30"
                   >
-                    <div className="w-full bg-[#1b1f23] text-white rounded-3xl p-5 shadow-2xl border border-zinc-800 space-y-4 max-h-[92%] overflow-y-auto">
+                    <div className="w-full max-w-sm bg-white text-zinc-900 rounded-3xl p-5 sm:p-6 shadow-2xl border border-zinc-200/90 space-y-4 max-h-[92vh] overflow-y-auto">
                       
-                      {/* Top Location Icon */}
+                      {/* Top Location Icon Badge */}
                       <div className="flex justify-center">
-                        <div className="w-12 h-12 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center">
-                          <MapPin size={24} className="text-blue-500 fill-blue-500/20" />
+                        <div className="w-13 h-13 rounded-2xl bg-blue-50 text-[#2874f0] border border-blue-100 flex items-center justify-center shadow-xs">
+                          <MapPin size={26} className="text-[#2874f0] fill-blue-500/20" />
                         </div>
                       </div>
 
                       {/* Heading */}
-                      <h3 className="text-base sm:text-lg font-bold text-center leading-snug font-headline text-white px-2">
-                        Allow <span className="text-blue-400 font-extrabold">GM Fashions</span> to access this device's location?
+                      <h3 className="text-base sm:text-lg font-extrabold text-center leading-snug font-headline text-zinc-900 px-1">
+                        Allow <span className="text-[#2874f0]">GM Fashions</span> to access this device's location?
                       </h3>
 
                       {/* Third Party Notice Box */}
-                      <div className="bg-[#2a2f35] rounded-2xl p-3 flex items-center gap-3 text-xs text-zinc-300 border border-zinc-700/60">
-                        <Shield size={18} className="shrink-0 text-blue-400" />
-                        <span className="flex-1 leading-snug">
+                      <div className="bg-blue-50/60 rounded-2xl p-3 flex items-center gap-3 text-xs text-zinc-600 border border-blue-100/80">
+                        <Shield size={18} className="shrink-0 text-[#2874f0]" />
+                        <span className="flex-1 leading-snug font-medium">
                           This app stated that it may share location data with third parties
                         </span>
                         <ChevronRight size={16} className="text-zinc-400 shrink-0" />
@@ -270,21 +270,21 @@ export default function OnboardingModal() {
                           onClick={() => setLocationType('precise')}
                           className={`flex flex-col items-center p-2.5 rounded-2xl border transition-all cursor-pointer ${
                             locationType === 'precise' 
-                              ? 'border-blue-500 bg-blue-500/10 ring-2 ring-blue-500/30' 
-                              : 'border-zinc-700 bg-[#252a30] opacity-80'
+                              ? 'border-[#2874f0] bg-blue-50/80 ring-2 ring-blue-500/20 shadow-xs' 
+                              : 'border-zinc-200 bg-zinc-50/80 hover:bg-zinc-100 opacity-90'
                           }`}
                         >
                           {/* Map graphic mockup */}
-                          <div className="w-20 h-20 rounded-full border-2 border-zinc-600 relative overflow-hidden bg-zinc-800 flex items-center justify-center mb-2 shadow-inner">
+                          <div className="w-20 h-20 rounded-full border border-blue-200 relative overflow-hidden bg-blue-50/50 flex items-center justify-center mb-2 shadow-inner">
                             {/* Radial grid lines */}
-                            <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:12px_12px] opacity-40" />
+                            <div className="absolute inset-0 bg-[radial-gradient(#2874f0_1px,transparent_1px)] [background-size:12px_12px] opacity-25" />
                             {/* Location Pin */}
-                            <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg z-10 animate-bounce">
-                              <MapPin size={14} className="fill-white" />
+                            <div className="w-7 h-7 rounded-full bg-[#2874f0] text-white flex items-center justify-center shadow-md z-10 animate-bounce">
+                              <MapPin size={15} className="fill-white" />
                             </div>
                           </div>
-                          <span className="text-xs font-bold font-headline text-white">
-                            {t('precise')}
+                          <span className="text-xs font-black font-headline text-zinc-900">
+                            Precise
                           </span>
                         </div>
 
@@ -293,46 +293,46 @@ export default function OnboardingModal() {
                           onClick={() => setLocationType('approximate')}
                           className={`flex flex-col items-center p-2.5 rounded-2xl border transition-all cursor-pointer ${
                             locationType === 'approximate' 
-                              ? 'border-blue-500 bg-blue-500/10 ring-2 ring-blue-500/30' 
-                              : 'border-zinc-700 bg-[#252a30] opacity-80'
+                              ? 'border-[#2874f0] bg-blue-50/80 ring-2 ring-blue-500/20 shadow-xs' 
+                              : 'border-zinc-200 bg-zinc-50/80 hover:bg-zinc-100 opacity-90'
                           }`}
                         >
                           {/* Map graphic mockup */}
-                          <div className="w-20 h-20 rounded-full border-2 border-zinc-600 relative overflow-hidden bg-zinc-800 flex items-center justify-center mb-2 shadow-inner">
+                          <div className="w-20 h-20 rounded-full border border-amber-200 relative overflow-hidden bg-amber-50/50 flex items-center justify-center mb-2 shadow-inner">
                             {/* Road network mockup */}
-                            <div className="absolute inset-0 border-t-2 border-r-2 border-amber-500/60 top-1/2 -left-2 rotate-12" />
-                            <div className="absolute inset-0 border-b-2 border-blue-400/60 bottom-2 right-1" />
-                            <div className="w-8 h-8 rounded-full border-2 border-dashed border-amber-400 bg-amber-400/20 flex items-center justify-center z-10">
-                              <div className="w-2 h-2 rounded-full bg-amber-400" />
+                            <div className="absolute inset-0 border-t-2 border-r-2 border-amber-400/80 top-1/2 -left-2 rotate-12" />
+                            <div className="absolute inset-0 border-b-2 border-blue-400/80 bottom-2 right-1" />
+                            <div className="w-8 h-8 rounded-full border-2 border-dashed border-amber-500 bg-amber-400/30 flex items-center justify-center z-10">
+                              <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                             </div>
                           </div>
-                          <span className="text-xs font-bold font-headline text-white">
-                            {t('approximate')}
+                          <span className="text-xs font-black font-headline text-zinc-900">
+                            Approximate
                           </span>
                         </div>
                       </div>
 
-                      {/* Action Option Buttons */}
+                      {/* Action Option Buttons (English) */}
                       <div className="space-y-2 pt-2">
                         <button
                           onClick={() => handleLocationResponse('while_using')}
-                          className="w-full py-3 bg-[#2a2f35] hover:bg-[#343a42] text-white font-bold text-xs sm:text-sm rounded-2xl transition-all cursor-pointer text-center"
+                          className="w-full py-3 bg-[#2874f0] hover:bg-[#1d64ec] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all cursor-pointer text-center font-headline uppercase tracking-wider"
                         >
-                          {t('whileUsingApp')}
+                          While using the app
                         </button>
 
                         <button
                           onClick={() => handleLocationResponse('only_once')}
-                          className="w-full py-3 bg-[#2a2f35] hover:bg-[#343a42] text-white font-bold text-xs sm:text-sm rounded-2xl transition-all cursor-pointer text-center"
+                          className="w-full py-3 bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 font-bold text-xs sm:text-sm rounded-xl transition-all cursor-pointer text-center font-headline uppercase tracking-wider"
                         >
-                          {t('onlyThisTime')}
+                          Only this time
                         </button>
 
                         <button
                           onClick={() => handleLocationResponse('dont_allow')}
-                          className="w-full py-3 bg-transparent hover:bg-zinc-800/60 text-zinc-400 font-bold text-xs sm:text-sm rounded-2xl transition-all cursor-pointer text-center"
+                          className="w-full py-2.5 bg-transparent hover:bg-zinc-100 text-zinc-500 hover:text-zinc-800 font-bold text-xs sm:text-sm rounded-xl transition-all cursor-pointer text-center font-headline uppercase tracking-wider"
                         >
-                          {t('dontAllow')}
+                          Don't allow
                         </button>
                       </div>
 
