@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronRight, Shield, MapPin, Check, Globe, X, Phone, Lock, Sparkles, AlertCircle } from 'lucide-react';
+import { ChevronRight, Shield, MapPin, Check, Globe, X, Phone, Lock, Sparkles, AlertCircle, PartyPopper } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { useLanguage, LANGUAGE_OPTIONS, LanguageCode } from '../context/LanguageContext';
 
 export default function OnboardingModal() {
@@ -27,6 +28,39 @@ export default function OnboardingModal() {
   const [useEmailId, setUseEmailId] = useState<boolean>(false);
   const [emailInput, setEmailInput] = useState<string>('');
 
+  // Party popper confetti burst trigger
+  const triggerConfettiPop = () => {
+    // Center colorful burst
+    confetti({
+      particleCount: 90,
+      spread: 85,
+      origin: { y: 0.5 },
+      colors: ['#dc2626', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e', '#fbbf24']
+    });
+
+    // Left cannon
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 60,
+        spread: 65,
+        origin: { x: 0.1, y: 0.6 },
+        colors: ['#dc2626', '#fbbf24', '#3b82f6', '#ec4899']
+      });
+    }, 150);
+
+    // Right cannon
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 120,
+        spread: 65,
+        origin: { x: 0.9, y: 0.6 },
+        colors: ['#10b981', '#8b5cf6', '#dc2626', '#f59e0b']
+      });
+    }, 300);
+  };
+
   // Reset states when onboarding opens or changes step
   useEffect(() => {
     if (isOnboardingOpen) {
@@ -35,6 +69,8 @@ export default function OnboardingModal() {
       } else if (onboardingStep === 2) {
         setShowTruecallerSheet(true);
         setIsVerifyingOtp(false);
+      } else if (onboardingStep === 3) {
+        triggerConfettiPop();
       }
     }
   }, [isOnboardingOpen, onboardingStep]);
@@ -515,15 +551,19 @@ export default function OnboardingModal() {
             {onboardingStep === 3 && (
               <motion.div
                 key="step-3"
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.25 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 className="p-6 flex-1 flex flex-col items-center justify-center text-center space-y-6"
               >
-                {/* GM Fashions Shop Logo Badge */}
-                <div className="relative flex flex-col items-center">
-                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#dc2626] via-[#b91c1c] to-[#991b1b] text-white flex flex-col items-center justify-center shadow-xl border-4 border-red-100 relative">
+                {/* GM Fashions Shop Logo Badge with Confetti Pop Trigger */}
+                <div 
+                  onClick={triggerConfettiPop}
+                  className="relative flex flex-col items-center cursor-pointer group transform hover:scale-105 transition-transform"
+                  title="Click to pop confetti!"
+                >
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#dc2626] via-[#b91c1c] to-[#991b1b] text-white flex flex-col items-center justify-center shadow-2xl border-4 border-red-100 relative overflow-visible">
                     {/* GM Monogram Box */}
                     <div className="w-10 h-10 rounded-2xl bg-white text-[#dc2626] flex items-center justify-center font-black font-headline text-lg shadow-md mb-1">
                       GM
@@ -537,14 +577,22 @@ export default function OnboardingModal() {
                     <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg border-2 border-white">
                       <Check size={18} strokeWidth={3} />
                     </div>
+
+                    {/* Party Popper Icon Top Left */}
+                    <div className="absolute -top-2 -left-2 w-8 h-8 rounded-full bg-amber-400 text-zinc-900 flex items-center justify-center shadow-lg border-2 border-white animate-bounce">
+                      <PartyPopper size={18} />
+                    </div>
                   </div>
+                  <span className="text-[10px] font-bold text-red-600 mt-2 flex items-center gap-1 uppercase tracking-wider font-headline">
+                    <Sparkles size={12} className="animate-spin" /> Click logo to pop party colors!
+                  </span>
                 </div>
 
                 <div className="space-y-2">
                   <h2 className="text-xl font-black text-zinc-900 font-headline">
                     {t('welcomeGreeting')}
                   </h2>
-                  <div className="inline-block px-3.5 py-1 bg-red-50 text-[#dc2626] rounded-full text-xs font-bold font-headline border border-red-100">
+                  <div className="inline-block px-3.5 py-1 bg-red-50 text-[#dc2626] rounded-full text-xs font-bold font-headline border border-red-100 shadow-2xs">
                     Logged in as: {user.phone}
                   </div>
                   <p className="text-xs sm:text-sm text-zinc-500 max-w-xs mx-auto leading-relaxed">
@@ -555,8 +603,9 @@ export default function OnboardingModal() {
                 {/* Continue Shopping Button */}
                 <button
                   onClick={() => closeOnboarding()}
-                  className="w-full max-w-xs bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg transition-all cursor-pointer uppercase tracking-wider font-headline transform active:scale-95"
+                  className="w-full max-w-xs bg-[#dc2626] hover:bg-[#b91c1c] text-white font-bold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg transition-all cursor-pointer uppercase tracking-wider font-headline transform active:scale-95 flex items-center justify-center gap-2"
                 >
+                  <PartyPopper size={16} />
                   {t('continueShopping')}
                 </button>
               </motion.div>
