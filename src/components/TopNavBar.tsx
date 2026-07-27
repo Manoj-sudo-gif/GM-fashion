@@ -123,6 +123,10 @@ export default function TopNavBar() {
     }
   };
 
+  if (location.pathname === '/account') {
+    return null;
+  }
+
   return (
     <>
       <nav className={`sticky top-0 w-full z-[80] bg-white/95 backdrop-blur-xl border-b border-zinc-200/50 flex flex-col justify-between transition-[padding,box-shadow,background-color] duration-300 ease-out will-change-[padding,box-shadow] ${

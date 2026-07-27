@@ -1,7 +1,14 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Instagram, Facebook, Twitter, Youtube, ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
+  const location = useLocation();
+
+  if (location.pathname === '/account') {
+    return null;
+  }
+
   return (
     <footer id="main-footer" className="w-full bg-zinc-950 text-zinc-400 font-sans border-t border-zinc-900 mt-auto">
       {/* Attractive Follow Section */}

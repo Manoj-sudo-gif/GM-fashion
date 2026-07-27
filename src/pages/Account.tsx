@@ -236,8 +236,30 @@ export default function Account() {
         className="hidden" 
       />
 
-      {/* TOP STICKY HEADER FOR SUB-VIEWS */}
-      {view !== 'main' && (
+      {/* TOP STICKY HEADER */}
+      {view === 'main' ? (
+        <div className="sticky top-0 z-40 bg-white/95 border-b border-zinc-200/90 px-4 py-3.5 flex items-center justify-between shadow-2xs backdrop-blur-md">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#dc2626] to-[#991b1b] text-white flex items-center justify-center font-black font-headline text-xs tracking-tighter shadow-2xs">
+              GM
+            </div>
+            <div>
+              <h1 className="text-sm sm:text-base font-black text-zinc-900 font-headline uppercase tracking-wide leading-none">
+                My Account
+              </h1>
+              <p className="text-[10px] text-zinc-400 font-medium">GM Fashions Profile</p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate('/')}
+            className="p-2 -mr-2 rounded-full hover:bg-zinc-100 text-zinc-600 hover:text-zinc-900 transition-colors cursor-pointer flex items-center gap-1 text-xs font-bold font-headline uppercase"
+            title="Back to Home"
+          >
+            <span className="hidden sm:inline">Home</span>
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      ) : (
         <div className="sticky top-0 z-40 bg-white border-b border-zinc-200/90 px-4 py-3.5 flex items-center justify-between shadow-2xs backdrop-blur-md">
           <div className="flex items-center gap-3">
             <button 
