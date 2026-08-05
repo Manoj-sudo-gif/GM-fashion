@@ -45,7 +45,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     language: "Language",
     login: "Login",
     welcome: "Welcome",
-    skip: "Skip",
+    skip: "SKIP",
     searchPlaceholder: "Search for products, brands and more...",
     men: "Men",
     women: "Women",
@@ -82,7 +82,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     language: "மொழி",
     login: "உள்நுழைக",
     welcome: "வரவேற்பு",
-    skip: "தவிர்க்க",
+    skip: "SKIP",
     searchPlaceholder: "ஆடைகள், பிராண்டுகள் மற்றும் பலவற்றைத் தேடுங்கள்...",
     men: "ஆண்கள்",
     women: "பெண்கள்",
@@ -285,27 +285,46 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return (localStorage.getItem('gm_language') as LanguageCode) || 'ta'; // Default Tamil/English friendly
   });
 
-  const [user, setUser] = useState<UserProfile>({
-    phone: '+91 7373772390',
-    name: 'GM Fashions User',
-    isLoggedIn: false
+  const [user, setUser] = useState<UserProfile>(() => {
+    try {
+      const saved = localStorage.getItem('gm_user');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          return {
+            phone: parsed.phone || '',
+            name: parsed.name || '',
+            email: parsed.email || '',
+            avatar: parsed.avatar || '',
+            isLoggedIn: typeof parsed.isLoggedIn === 'boolean' ? parsed.isLoggedIn : Boolean(parsed.phone || parsed.name),
+            addresses: Array.isArray(parsed.addresses) ? parsed.addresses : []
+          };
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return {
+      phone: '',
+      name: '',
+      email: '',
+      avatar: '',
+      isLoggedIn: false,
+      addresses: []
+    };
   });
 
-  const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(true);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
   const [onboardingStep, setOnboardingStep] = useState<number>(1);
 
-  // Always start with onboarding modal open from step 1 (Location & Language -> Login -> Welcome) on page load/refresh
+  // Sync user state to localStorage when updated
   useEffect(() => {
-    localStorage.removeItem('gm_user');
-    localStorage.removeItem('gm_onboarding_completed');
-    setIsOnboardingOpen(true);
-    setOnboardingStep(1);
-    setUser({
-      phone: '+91 7373772390',
-      name: 'GM Fashions User',
-      isLoggedIn: false
-    });
-  }, []);
+    try {
+      localStorage.setItem('gm_user', JSON.stringify(user));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [user]);
 
   const setSelectedLanguage = (lang: LanguageCode) => {
     setSelectedLanguageState(lang);
@@ -328,13 +347,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const logoutUser = () => {
     setUser({
-      phone: '+91 7373772390',
-      name: 'GM Fashions User',
-      isLoggedIn: false
+      phone: '',
+      name: '',
+      email: '',
+      avatar: '',
+      isLoggedIn: false,
+      addresses: []
     });
     localStorage.removeItem('gm_user');
+    localStorage.removeItem('gm_saved_addresses');
     localStorage.removeItem('gm_onboarding_completed');
-    openOnboarding(1);
+    localStorage.removeItem('wishlist');
+    localStorage.removeItem('cart');
+    window.dispatchEvent(new Event('storage'));
   };
 
   return (

@@ -206,47 +206,53 @@ export default function DepartmentHeroSlider({ department, onSelectSubCategory }
 
   return (
     <div 
-      className="relative w-full rounded-2xl overflow-hidden shadow-md group border border-zinc-200/80 my-2 select-none"
+      className="relative w-full my-3 select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Aspect Ratio Container (Sleek ultra-wide on desktop so all categories fit neatly) */}
-      <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[24/9] lg:aspect-[28/8] lg:max-h-52 bg-zinc-900 overflow-hidden">
+      {/* Premium Swiping Banner Card Container */}
+      <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[24/9] rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm border border-zinc-200/80 bg-zinc-900">
         <AnimatePresence mode="wait">
           <motion.div
             key={`${department}-${currentSlide.id}`}
-            initial={{ opacity: 0, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="absolute inset-0 w-full h-full"
+            initial={{ opacity: 0, scale: 1.02, x: 50 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.98, x: -50 }}
+            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -30) nextSlide();
+              else if (info.offset.x > 30) prevSlide();
+            }}
+            className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
           >
             {/* Background Image */}
             <img 
               src={currentSlide.image} 
               alt={currentSlide.title} 
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center pointer-events-none"
+              referrerPolicy="no-referrer"
             />
 
-            {/* Gradient Overlay for Text Legibility */}
-            <div className={`absolute inset-0 bg-gradient-to-r ${currentSlide.gradient} flex flex-col justify-end p-4 sm:p-6 md:p-8`} />
+            {/* Gradient Overlay for Crisp Text Visibility */}
+            <div className={`absolute inset-0 bg-gradient-to-r ${currentSlide.gradient} flex flex-col justify-end p-4 sm:p-6 md:p-8 pointer-events-none`} />
 
-            {/* Slide Content */}
+            {/* Banner Slide Typography & CTA */}
             <div className="absolute inset-0 p-4 sm:p-6 md:p-8 flex flex-col justify-center items-start z-10 max-w-xl">
-              {/* Badge & Offer Tag */}
-              <div className="flex items-center gap-2 mb-1.5 sm:mb-2 flex-wrap">
-                <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-2 sm:px-2.5 py-0.5 rounded-full bg-blue-600 text-white shadow-xs">
-                  <Sparkles size={11} />
+              {/* Badges */}
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-md bg-blue-600 text-white shadow-xs">
                   {currentSlide.badge}
                 </span>
-                <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-400 text-zinc-950">
-                  <Tag size={11} />
+                <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-amber-400 text-zinc-950">
+                  <Tag size={10} />
                   {currentSlide.discount}
                 </span>
               </div>
 
               {/* Title */}
-              <h2 className="text-sm sm:text-lg md:text-2xl font-black font-headline text-white tracking-wide uppercase leading-tight drop-shadow-sm">
+              <h2 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-black font-headline text-white tracking-wide uppercase leading-tight drop-shadow-xs">
                 {currentSlide.title}
               </h2>
 
@@ -259,7 +265,7 @@ export default function DepartmentHeroSlider({ department, onSelectSubCategory }
               {currentSlide.subCategoryTarget && onSelectSubCategory && (
                 <button
                   onClick={() => onSelectSubCategory('Top Wear', currentSlide.subCategoryTarget!)}
-                  className="mt-2.5 sm:mt-4 inline-flex items-center gap-1.5 px-3.5 sm:px-5 py-1.5 sm:py-2 bg-white hover:bg-zinc-100 text-zinc-950 rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-sm transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95"
+                  className="mt-3 sm:mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-white hover:bg-amber-400 text-zinc-950 hover:text-zinc-950 rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95"
                 >
                   {currentSlide.ctaText}
                   <ArrowRight size={13} />
@@ -272,7 +278,7 @@ export default function DepartmentHeroSlider({ department, onSelectSubCategory }
         {/* Previous Button */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/40 hover:bg-black/70 backdrop-blur-xs text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer z-20 border border-white/20"
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/35 hover:bg-black/70 backdrop-blur-xs text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer z-20 border border-white/20"
           aria-label="Previous Slide"
         >
           <ChevronLeft size={20} />
@@ -281,25 +287,27 @@ export default function DepartmentHeroSlider({ department, onSelectSubCategory }
         {/* Next Button */}
         <button
           onClick={nextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/40 hover:bg-black/70 backdrop-blur-xs text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer z-20 border border-white/20"
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/35 hover:bg-black/70 backdrop-blur-xs text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer z-20 border border-white/20"
           aria-label="Next Slide"
         >
           <ChevronRight size={20} />
         </button>
+      </div>
 
-        {/* Slide Pagination Dots */}
-        <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 bg-black/30 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/10">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentIndex ? 'w-5 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/80'
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
+      {/* Modern Swiper Pill Bar Indicators directly below banner */}
+      <div className="flex items-center justify-center gap-1.5 mt-2.5 mb-1">
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+              idx === currentIndex 
+                ? 'w-7 bg-zinc-900 shadow-xs' 
+                : 'w-2.5 bg-zinc-300 hover:bg-zinc-400'
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
       </div>
     </div>
   );

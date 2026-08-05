@@ -1,6 +1,6 @@
 {
-  "name": "GM Fashion",
+  "name": "GM Fashions",
   "description": "A modern, minimalist e-commerce site for luxury architecture and performance wear.",
-  "requestFramePermissions": [],
-  "majorCapabilities": []
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Home, LayoutGrid, Package, User, X, ChevronRight, ShoppingBag, MapPin, Wallet, ArrowRight, Heart, PhoneCall, Trash2, Check, Award, Globe } from 'lucide-react';
+import { Home, LayoutGrid, Package, User, X, ChevronRight, ChevronLeft, ShoppingBag, MapPin, Wallet, ArrowRight, Heart, PhoneCall, Trash2, Check, Award, Globe, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import shopkeeperImg from '../assets/images/mens_fashion_empty_orders_illustration_1784884242598.jpg';
 import { useLanguage } from '../context/LanguageContext';
@@ -37,24 +37,225 @@ export default function BottomNavBar() {
   // Selected category state inside the drawer
   const [selectedMainCat, setSelectedMainCat] = useState<'men' | 'boys' | 'kids' | 'accessories'>('men');
 
+  // Drawer search & counts state
+  const [isDrawerSearchOpen, setIsDrawerSearchOpen] = useState(false);
+  const [drawerSearchQuery, setDrawerSearchQuery] = useState('');
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCounts = () => {
+      try {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        setWishlistCount(Array.isArray(wishlist) ? wishlist.length : 0);
+
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const totalCartQty = Array.isArray(cart) ? cart.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0) : 0;
+        setCartCount(totalCartQty);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    updateCounts();
+    window.addEventListener('storage', updateCounts);
+    return () => window.removeEventListener('storage', updateCounts);
+  }, [activeDrawer]);
+
+  // Structured Category data for the full screen categories drawer
+  const detailedCategoriesData = {
+    men: [
+      {
+        groupName: 'Topwear',
+        items: [
+          { name: 'Shirt', url: '/products?category=Men&search=shirt', img: 'https://styleunion.in/cdn/shop/files/SMYS00049DARKOLIVE_1.webp?v=1783502402&width=1100' },
+          { name: 'T-Shirt', url: '/products?category=Men&search=tshirt', img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=400&q=80' },
+          { name: 'T-Shirt Combo', url: '/products?category=Men&search=combo', img: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Bottomwear',
+        items: [
+          { name: 'Track Pant', url: '/products?category=Men&search=track', img: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Shorts', url: '/products?category=Men&search=shorts', img: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Jeans', url: '/products?category=Men&search=jeans', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Cotton Pant', url: '/products?category=Men&search=cotton', img: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Formal Pant', url: '/products?category=Men&search=formal', img: 'https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Innerwear',
+        items: [
+          { name: 'Vest', url: '/products?category=Men&search=vest', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Gym Vest', url: '/products?category=Men&search=gym', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Brief', url: '/products?category=Men&search=brief', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Trunk', url: '/products?category=Men&search=trunk', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Printed Brief', url: '/products?category=Men&search=printed%20brief', img: 'https://images.unsplash.com/photo-1506629082925-2368c4b2b000?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Printed Trunk', url: '/products?category=Men&search=printed%20trunk', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Colour Vest', url: '/products?category=Men&search=colour%20vest', img: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Traditional',
+        items: [
+          { name: 'White Shirt', url: '/products?category=Men&search=white%20shirt', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Dhoti', url: '/products?category=Men&search=dhoti', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' },
+          { name: 'Lungi', url: '/products?category=Men&search=lungi', img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Set Dhoti', url: '/products?category=Men&search=set%20dhoti', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' },
+          { name: 'Political Dhoti', url: '/products?category=Men&search=political%20dhoti', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' }
+        ]
+      }
+    ],
+    boys: [
+      {
+        groupName: 'Topwear',
+        items: [
+          { name: 'Shirt', url: '/products?category=Boys&search=shirt', img: 'https://cdn.shopify.com/s/files/1/0583/4820/8201/files/UntitledSession2999.jpg' },
+          { name: 'T-Shirt', url: '/products?category=Boys&search=tshirt', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'T-Shirt Combo', url: '/products?category=Boys&search=combo', img: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Casual Shirt', url: '/products?category=Boys&search=casual', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Polo Tee', url: '/products?category=Boys&search=polo', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Hoodies & Sweaters', url: '/products?category=Boys&search=hoodie', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Bottomwear',
+        items: [
+          { name: 'Track Pant', url: '/products?category=Boys&search=track', img: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Shorts', url: '/products?category=Boys&search=shorts', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Jeans', url: '/products?category=Boys&search=jeans', img: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Cotton Pant', url: '/products?category=Boys&search=cotton', img: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Formal Pant', url: '/products?category=Boys&search=formal', img: 'https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Innerwear',
+        items: [
+          { name: 'Vest', url: '/products?category=Boys&search=vest', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Gym Vest', url: '/products?category=Boys&search=gym', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Brief', url: '/products?category=Boys&search=brief', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Trunk', url: '/products?category=Boys&search=trunk', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Printed Brief', url: '/products?category=Boys&search=printed%20brief', img: 'https://images.unsplash.com/photo-1506629082925-2368c4b2b000?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Printed Trunk', url: '/products?category=Boys&search=printed%20trunk', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Colour Vest', url: '/products?category=Boys&search=colour%20vest', img: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Traditional',
+        items: [
+          { name: 'White Shirt', url: '/products?category=Boys&search=white%20shirt', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Dhoti', url: '/products?category=Boys&search=dhoti', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' },
+          { name: 'Lungi', url: '/products?category=Boys&search=lungi', img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Set Dhoti', url: '/products?category=Boys&search=set%20dhoti', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' },
+          { name: 'Kurta Set', url: '/products?category=Boys&search=kurta', img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80' }
+        ]
+      }
+    ],
+    kids: [
+      {
+        groupName: 'Topwear',
+        items: [
+          { name: 'Shirt', url: '/products?category=Kids&search=shirt', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80' },
+          { name: 'T-Shirt', url: '/products?category=Kids&search=tshirt', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'T-Shirt Combo', url: '/products?category=Kids&search=combo', img: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Casual Top', url: '/products?category=Kids&search=top', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Polo Tee', url: '/products?category=Kids&search=polo', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Printed Tee', url: '/products?category=Kids&search=printed', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Bottomwear',
+        items: [
+          { name: 'Track Pant', url: '/products?category=Kids&search=track', img: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Shorts', url: '/products?category=Kids&search=shorts', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Jeans', url: '/products?category=Kids&search=jeans', img: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Cotton Pant', url: '/products?category=Kids&search=cotton', img: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Leggings & Pants', url: '/products?category=Kids&search=leggings', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Innerwear & Baby Essentials',
+        items: [
+          { name: 'Vest', url: '/products?category=Kids&search=vest', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Brief', url: '/products?category=Kids&search=brief', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Trunk', url: '/products?category=Kids&search=trunk', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Onesies', url: '/products?category=Kids&search=romper', img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Inner Vests', url: '/products?category=Kids&search=innerwear', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Printed Brief', url: '/products?category=Kids&search=printed%20brief', img: 'https://images.unsplash.com/photo-1506629082925-2368c4b2b000?auto=format&fit=crop&w=400&q=80' }
+        ]
+      },
+      {
+        groupName: 'Traditional & Ethnic',
+        items: [
+          { name: 'Kurta Pyjama', url: '/products?category=Kids&search=kurta', img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Frock & Gown', url: '/products?category=Kids&search=frock', img: 'https://www.mumkins.in/cdn/shop/files/1_acb25f3d-7de5-4d76-a9a0-108592db9e9a.webp?v=1778479117&width=1080' },
+          { name: 'Kids Dhoti Set', url: '/products?category=Kids&search=dhoti', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' },
+          { name: 'Ethnic Suit', url: '/products?category=Kids&search=suit', img: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=400&q=80' },
+          { name: 'White Shirt & Dhoti', url: '/products?category=Kids&search=white%20shirt', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80' }
+        ]
+      }
+    ],
+    accessories: [
+      {
+        groupName: 'Accessories Collection',
+        items: [
+          { name: 'Perfume & Cologne', url: '/products?category=Accessories&search=perfume', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Belts', url: '/products?category=Accessories&search=belt', img: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Wallets', url: '/products?category=Accessories&search=wallet', img: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Glasses & Eyewear', url: '/products?category=Accessories&search=glasses', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Footwear & Juttis', url: '/products?category=Accessories&search=footwear', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80' },
+          { name: 'Dhotis & Shawls', url: '/products?category=Accessories&search=dhoti', img: 'https://m.media-amazon.com/images/I/71sQIeakXfL._AC_UY1100_.jpg' }
+        ]
+      }
+    ]
+  };
+
   // Load orders from localStorage
   const loadOrders = () => {
     try {
+      if (!user || !user.isLoggedIn || !user.phone) {
+        setOrders([]);
+        return;
+      }
+      const userPhoneDigits = user.phone.replace(/\D/g, '').slice(-10);
       const saved = localStorage.getItem('orders');
       if (saved) {
-        setOrders(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const userOrders = parsed.filter((o: any) => {
+            const orderPhone = (o.phone || (typeof o.address === 'object' ? o.address?.phone : '') || '').replace(/\D/g, '').slice(-10);
+            return orderPhone === userPhoneDigits;
+          });
+          setOrders(userOrders);
+        } else {
+          setOrders([]);
+        }
+      } else {
+        setOrders([]);
       }
     } catch (e) {
       console.error(e);
+      setOrders([]);
     }
   };
 
   useEffect(() => {
     loadOrders();
-  }, [activeDrawer]);
+  }, [activeDrawer, user]);
 
   // Sync navigation active state
   const currentPath = location.pathname;
+
+  // Hide bottom navigation on checkout, orders, and account pages
+  const isHideBottomNav = 
+    currentPath.startsWith('/checkout') ||
+    currentPath.startsWith('/orders') ||
+    currentPath.startsWith('/my-orders') ||
+    currentPath.startsWith('/account');
+
+  if (isHideBottomNav) {
+    return null;
+  }
+
   const isHomeActive = currentPath === '/' && activeDrawer === null;
   const isCategoriesActive = activeDrawer === 'categories';
   const isOrdersActive = currentPath === '/orders' || currentPath === '/my-orders' || activeDrawer === 'orders';
@@ -300,36 +501,131 @@ export default function BottomNavBar() {
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-              className="fixed bottom-0 left-0 w-full bg-white rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.15)] z-[95] flex flex-col max-h-[82vh] overflow-hidden pb-16 border-t border-zinc-100 md:hidden"
+              className={`fixed left-0 w-full bg-white z-[95] flex flex-col overflow-hidden pb-16 md:hidden ${
+                activeDrawer === 'categories'
+                  ? 'inset-0 h-full max-h-none rounded-none'
+                  : 'bottom-0 rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.15)] max-h-[82vh] border-t border-zinc-100'
+              }`}
             >
               {/* Swipe/Drag Indicator Bar */}
-              <div className="w-12 h-1.5 bg-zinc-200 rounded-full mx-auto my-3 cursor-pointer" onClick={closeDrawer} />
+              <div className="w-12 h-1.5 bg-zinc-200 rounded-full mx-auto my-3 shrink-0 cursor-pointer" onClick={closeDrawer} />
 
               {/* SHEET 1: CATEGORIES DRAWER */}
               {activeDrawer === 'categories' && (
-                <div className="flex flex-col h-full overflow-hidden">
-                  <div className="flex justify-between items-center px-6 pb-4 border-b border-zinc-100">
-                    <div>
-                      <h3 className="text-lg font-black tracking-tight text-zinc-900 font-headline uppercase">Browse Departments</h3>
-                      <p className="text-[11px] text-zinc-400 font-medium">Select a category to browse luxury fashion</p>
+                <div className="flex flex-col h-full min-h-0 overflow-hidden flex-1 bg-white">
+                  {/* HEADER */}
+                  <div className="flex flex-col border-b border-zinc-100 bg-white shrink-0">
+                    <div className="flex justify-between items-center px-4 py-3.5">
+                      {/* Top Left Corner with Back (<) symbol */}
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={closeDrawer}
+                          className="p-1 hover:bg-zinc-100 rounded-full text-zinc-800 hover:text-zinc-950 transition-colors cursor-pointer -ml-1 flex items-center justify-center"
+                          aria-label="Back"
+                          title="Back"
+                        >
+                          <ChevronLeft size={24} strokeWidth={2.5} />
+                        </button>
+                        <h3 className="text-base sm:text-lg font-black tracking-wider text-zinc-900 font-headline uppercase">
+                          CATEGORIES
+                        </h3>
+                      </div>
+
+                      {/* Top Right Corner Icons */}
+                      <div className="flex items-center gap-2 sm:gap-2.5">
+                        {/* Search Icon */}
+                        <button 
+                          onClick={() => setIsDrawerSearchOpen(!isDrawerSearchOpen)} 
+                          className="p-1.5 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors cursor-pointer"
+                          title="Search"
+                          aria-label="Search"
+                        >
+                          <Search size={20} />
+                        </button>
+
+                        {/* Wishlist Icon */}
+                        <button 
+                          onClick={() => {
+                            closeDrawer();
+                            navigate('/products?wishlist=true');
+                          }} 
+                          className="p-1.5 text-zinc-700 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors relative cursor-pointer"
+                          title="Wishlist"
+                          aria-label="Wishlist"
+                        >
+                          <Heart size={20} />
+                          {wishlistCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                              {wishlistCount}
+                            </span>
+                          )}
+                        </button>
+
+                        {/* Shopping Bag Icon */}
+                        <button 
+                          onClick={() => {
+                            closeDrawer();
+                            navigate('/checkout');
+                          }} 
+                          className="p-1.5 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors relative cursor-pointer"
+                          title="Shopping Bag"
+                          aria-label="Shopping Bag"
+                        >
+                          <ShoppingBag size={20} />
+                          {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-zinc-900 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                              {cartCount}
+                            </span>
+                          )}
+                        </button>
+                      </div>
                     </div>
-                    <button onClick={closeDrawer} className="p-2 hover:bg-zinc-100 rounded-full text-zinc-400 hover:text-zinc-900 transition-colors">
-                      <X size={18} />
-                    </button>
+
+                    {/* Toggled Inline Search Input */}
+                    {isDrawerSearchOpen && (
+                      <form 
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          if (drawerSearchQuery.trim()) {
+                            closeDrawer();
+                            navigate(`/products?search=${encodeURIComponent(drawerSearchQuery.trim())}`);
+                          }
+                        }}
+                        className="px-4 pb-3 flex items-center gap-2"
+                      >
+                        <div className="relative flex-1">
+                          <input 
+                            type="text" 
+                            value={drawerSearchQuery}
+                            onChange={(e) => setDrawerSearchQuery(e.target.value)}
+                            placeholder="Search shirts, belts, perfumes..." 
+                            className="w-full bg-zinc-100 border border-zinc-200 rounded-lg pl-9 pr-3 py-1.5 text-xs focus:outline-none focus:border-zinc-900 font-body"
+                            autoFocus
+                          />
+                          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
+                        </div>
+                        <button 
+                          type="submit" 
+                          className="bg-zinc-900 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg uppercase tracking-wider cursor-pointer font-headline"
+                        >
+                          Search
+                        </button>
+                      </form>
+                    )}
                   </div>
 
-                  {/* Main Grid Content split layout: Left side menu, Right side list */}
-                  <div className="flex flex-grow h-[55vh] overflow-hidden">
-                    {/* Left Sidebar selectors */}
-                    <div className="w-1/3 bg-zinc-50 border-r border-zinc-100 overflow-y-auto py-2">
+                  {/* MAIN GRID CONTENT split layout: Left side menu, Right side list */}
+                  <div className="flex flex-grow min-h-0 h-full overflow-hidden">
+                    {/* Left Sidebar Selectors */}
+                    <div className="w-1/3 bg-zinc-50 border-r border-zinc-200/80 overflow-y-auto py-2 shrink-0">
                       {(['men', 'boys', 'kids', 'accessories'] as const).map((cat) => (
                         <button
                           key={cat}
                           onClick={() => setSelectedMainCat(cat)}
-                          className={`w-full py-4 px-3 text-left font-headline text-[11px] font-black uppercase tracking-wider transition-all border-l-4 ${
+                          className={`w-full py-3.5 px-3 text-left font-headline text-xs font-black uppercase tracking-wider transition-all border-l-4 cursor-pointer focus:outline-none ${
                             selectedMainCat === cat 
-                              ? 'bg-white border-blue-600 text-blue-600' 
-                              : 'border-transparent text-zinc-500'
+                              ? 'bg-white border-zinc-900 text-zinc-900 shadow-2xs font-extrabold' 
+                              : 'border-transparent text-zinc-500 hover:text-zinc-900'
                           }`}
                         >
                           {cat}
@@ -337,60 +633,58 @@ export default function BottomNavBar() {
                       ))}
                     </div>
 
-                    {/* Right side subcategory contents */}
-                    <div className="w-2/3 p-4 overflow-y-auto flex flex-col gap-4">
-                      {/* Premium Department Shortcut */}
-                      {selectedMainCat !== 'accessories' && (
+                    {/* Right Side Subcategory Contents */}
+                    <div className="w-2/3 p-3 sm:p-4 overflow-y-auto flex flex-col gap-4">
+                      {/* Department Title & Quick View All */}
+                      <div className="flex items-center justify-between border-b border-zinc-100 pb-2 shrink-0">
+                        <h4 className="text-xs font-black uppercase text-zinc-900 tracking-wider font-headline">
+                          {selectedMainCat === 'men' ? "Men's Fashion" : selectedMainCat === 'boys' ? "Boys Collection" : selectedMainCat === 'kids' ? "Kids Apparel" : "Fashion Accessories"}
+                        </h4>
                         <button
                           onClick={() => {
                             closeDrawer();
-                            const routeGender = selectedMainCat === 'men' ? 'Men' : selectedMainCat === 'boys' ? 'Boys' : 'Kids';
-                            navigate(`/category/${routeGender}`);
+                            const route = selectedMainCat === 'accessories' ? '/products?category=Accessories' : `/category/${selectedMainCat.charAt(0).toUpperCase() + selectedMainCat.slice(1)}`;
+                            navigate(route);
                           }}
-                          className="w-full bg-zinc-950 text-white text-[10px] font-black uppercase tracking-wider py-3 px-4 rounded-xl flex items-center justify-between shadow-sm cursor-pointer hover:bg-zinc-800 transition-colors"
+                          className="text-[10px] font-bold text-zinc-900 hover:text-zinc-600 flex items-center gap-0.5 uppercase tracking-wider cursor-pointer"
                         >
-                          <span>Explore {selectedMainCat}'s Hub</span>
-                          <ArrowRight size={12} className="text-blue-400" />
+                          <span>View All</span>
+                          <ChevronRight size={12} />
                         </button>
-                      )}
+                      </div>
 
-                      <div className="grid grid-cols-2 gap-3 pb-4">
-                        {categoriesList[selectedMainCat].map((sub, idx) => (
-                          <div 
-                            key={idx}
-                            onClick={() => {
-                              closeDrawer();
-                              navigate(sub.url);
-                            }}
-                            className="flex flex-col items-center bg-zinc-50/50 hover:bg-zinc-50 border border-zinc-100 rounded-xl p-2.5 text-center cursor-pointer group transition-all"
-                          >
-                            <div className="w-14 h-14 rounded-full overflow-hidden border border-zinc-200 shadow-xs mb-2 bg-white">
-                              <img 
-                                src={sub.img} 
-                                alt={sub.name} 
-                                className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300" 
-                                referrerPolicy="no-referrer"
-                              />
-                            </div>
-                            <span className="text-[10px] font-bold text-zinc-800 font-headline uppercase tracking-wide leading-tight line-clamp-1">{sub.name}</span>
+                      {/* Subcategory Groups with 3 Round Product Icons per row */}
+                      {detailedCategoriesData[selectedMainCat].map((group, groupIdx) => (
+                        <div key={groupIdx} className="space-y-2">
+                          <h5 className="text-[10px] font-black uppercase text-zinc-400 tracking-widest font-headline">
+                            {group.groupName}
+                          </h5>
+                          <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+                            {group.items.map((sub, itemIdx) => (
+                              <div 
+                                key={itemIdx}
+                                onClick={() => {
+                                  closeDrawer();
+                                  navigate(sub.url);
+                                }}
+                                className="flex flex-col items-center cursor-pointer group text-center"
+                              >
+                                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden border border-zinc-200 group-hover:border-zinc-900 shadow-2xs bg-white transition-all duration-200 p-0.5 flex items-center justify-center shrink-0">
+                                  <img 
+                                    src={sub.img} 
+                                    alt={sub.name} 
+                                    className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-300" 
+                                    referrerPolicy="no-referrer"
+                                  />
+                                </div>
+                                <span className="text-[9px] sm:text-[10px] font-bold text-zinc-800 font-headline uppercase tracking-tight leading-tight line-clamp-2 mt-1 group-hover:text-zinc-900 transition-colors">
+                                  {sub.name}
+                                </span>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-
-                      {/* Promoted collection box */}
-                      <div 
-                        onClick={() => {
-                          closeDrawer();
-                          navigate('/products');
-                        }}
-                        className="bg-blue-50 border border-blue-100 rounded-xl p-3.5 flex items-center justify-between cursor-pointer hover:bg-blue-100/60 transition-colors"
-                      >
-                        <div className="space-y-0.5">
-                          <h4 className="text-[10px] font-black uppercase text-blue-800 tracking-wider font-headline">GM Exclusive Autumn 26</h4>
-                          <p className="text-[9px] text-blue-600 font-medium font-body">Browse 120+ curated articles</p>
                         </div>
-                        <ChevronRight size={14} className="text-blue-600" />
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -607,7 +901,7 @@ export default function BottomNavBar() {
 
                     {/* Developer notes / Credit stamp */}
                     <div className="text-center space-y-1 py-2">
-                      <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest font-headline">GM FASHION MOBILE V2.0.4</p>
+                      <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest font-headline">GM FASHIONS MOBILE V2.0.4</p>
                       <p className="text-[8px] text-zinc-400 font-medium font-body">Crafted for premium user responsiveness</p>
                     </div>
                   </div>

@@ -11,14 +11,14 @@ export interface Product {
   image: string;
   images?: string[]; // Multiple high-res gallery images for split-screen vertical scroll
   details?: string;
-  brand?: string; // Brand name (e.g., GM Fashion)
+  brand?: string; // Brand name (e.g., GM Fashions)
 }
 
 export const allProducts: Product[] = [
   // User's featured products for Home Page & Product Detail Page
   {
     id: 1,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Luxury Linen Fancy Shirt',
     price: '₹ 1,499',
     priceVal: 1499,
@@ -38,7 +38,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 2,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Premium Crewneck Combo (Pack of 3)',
     price: '₹ 999',
     priceVal: 999,
@@ -58,7 +58,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 3,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Classic Italian Leather Belt',
     price: '₹ 799',
     priceVal: 799,
@@ -78,7 +78,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 4,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Oud Absolu Luxury Perfume',
     price: '₹ 1,899',
     priceVal: 1899,
@@ -98,7 +98,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 5,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Chronograph Classic Steel Watch',
     price: '₹ 2,499',
     priceVal: 2499,
@@ -118,7 +118,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 6,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Ultra-Light Casual Sneakers',
     price: '₹ 1,999',
     priceVal: 1999,
@@ -305,7 +305,7 @@ export const allProducts: Product[] = [
   // --- MEN PRODUCTS ---
   {
     id: 19,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Prime Casual Cotton Shirt',
     price: '₹ 1,299',
     priceVal: 1299,
@@ -319,7 +319,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 20,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Prime Crewneck Tee',
     price: '₹ 699',
     priceVal: 699,
@@ -333,7 +333,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 21,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Stretch Slim-Fit Chino Pant',
     price: '₹ 1,799',
     priceVal: 1799,
@@ -347,7 +347,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 22,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Activewear Dry-Fit Track Pant',
     price: '₹ 1,199',
     priceVal: 1199,
@@ -361,7 +361,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 23,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Casual Summer Cotton Shorts',
     price: '₹ 899',
     priceVal: 899,
@@ -375,7 +375,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 24,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Classic Ribbed Underwear Vest',
     price: '₹ 349',
     priceVal: 349,
@@ -389,7 +389,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 25,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Performance Gym Training Tank',
     price: '₹ 499',
     priceVal: 499,
@@ -403,7 +403,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 26,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Premium Soft Cotton Brief (Pack of 2)',
     price: '₹ 449',
     priceVal: 449,
@@ -417,7 +417,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 27,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Comfort Fit Cotton Trunk',
     price: '₹ 399',
     priceVal: 399,
@@ -431,7 +431,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 28,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Royal Traditional Silk Shirt',
     price: '₹ 1,899',
     priceVal: 1899,
@@ -445,7 +445,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 29,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Royal Jari Border Cotton Dhoti',
     price: '₹ 999',
     priceVal: 999,
@@ -459,7 +459,7 @@ export const allProducts: Product[] = [
   },
   {
     id: 30,
-    brand: 'GM Fashion',
+    brand: 'GM Fashions',
     name: 'GM Vaibhavam Dhoti & Shirt Gift Set',
     price: '₹ 2,499',
     priceVal: 2499,
@@ -712,6 +712,34 @@ export const allProducts: Product[] = [
     sizes: ['2-3Y', '4-5Y', '6-7Y'],
     image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
     details: 'Extremely sweet pre-stitched cotton dhoti and soft art-silk embroidered kurta top. Easy velcro waistband for baby convenience.'
+  },
+  {
+    id: 48,
+    brand: 'GM Fashions',
+    name: 'GM Tactical Six-Pocket Cargo Pant',
+    price: '₹ 1,599',
+    priceVal: 1599,
+    category: 'Cargo',
+    gender: 'Men',
+    tags: ['Bottom Wear', 'Trending', 'Cargo'],
+    colors: ['#374151', '#78350f', '#000000'],
+    sizes: ['30', '32', '34', '36'],
+    image: 'https://images.unsplash.com/photo-1517438476312-10d79c07750d?auto=format&fit=crop&q=80&w=800',
+    details: 'Heavy-duty cotton twill cargo pants with 6 reinforced utility pockets, relaxed tapered fit, and adjustable ankle ties.'
+  },
+  {
+    id: 49,
+    brand: 'GM Fashions',
+    name: 'GM Vintage Indigo Slim-Fit Jeans',
+    price: '₹ 1,899',
+    priceVal: 1899,
+    category: 'Jeans',
+    gender: 'Men',
+    tags: ['Bottom Wear', 'Denim', 'Jeans'],
+    colors: ['#1e3a8a', '#000000'],
+    sizes: ['30', '32', '34', '36'],
+    image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800',
+    details: 'Authentic 13.5oz stretch denim jeans with indigo wash finish, 5-pocket design, and heavy copper rivet construction.'
   }
 ];
 

@@ -22,7 +22,7 @@ export default function OnboardingModal() {
   const [locationType, setLocationType] = useState<'precise' | 'approximate'>('precise');
 
   // Step 2 Login State
-  const [phoneInput, setPhoneInput] = useState<string>('7373772390');
+  const [phoneInput, setPhoneInput] = useState<string>('');
   const [showTruecallerSheet, setShowTruecallerSheet] = useState<boolean>(true);
   const [isVerifyingOtp, setIsVerifyingOtp] = useState<boolean>(false);
   const [useEmailId, setUseEmailId] = useState<boolean>(false);

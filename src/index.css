@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Alex+Brush&family=Dancing+Script:wght@600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -60,3 +60,72 @@
   --font-body: "Inter", sans-serif;
   --font-label: "Inter", sans-serif;
 }
+
+.font-editorial {
+  font-family: "Bodoni Moda", "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
+}
+
+.font-signature {
+  font-family: "Great Vibes", "Alex Brush", "Dancing Script", cursive;
+}
+
+.font-script {
+  font-family: "Dancing Script", "Great Vibes", cursive;
+}
+
+/* Hide scrollbars globally for elements with .no-scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+@keyframes borderDash {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -800;
+  }
+}
+
+.animate-border-dash {
+  stroke-dasharray: 480 320;
+  animation: borderDash 2.2s linear infinite;
+}
+
+@keyframes gentleShake {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-3px) rotate(-4deg);
+  }
+  40% {
+    transform: translateY(1px) rotate(3deg);
+  }
+  60% {
+    transform: translateY(-2px) rotate(-2deg);
+  }
+  80% {
+    transform: translateY(1px) rotate(2deg);
+  }
+}
+
+.animate-gentle-shake {
+  animation: gentleShake 3.5s ease-in-out infinite;
+}
+
+.animate-gentle-shake-delayed-1 {
+  animation: gentleShake 3.5s ease-in-out infinite 0.5s;
+}
+
+.animate-gentle-shake-delayed-2 {
+  animation: gentleShake 3.5s ease-in-out infinite 1s;
+}
+
