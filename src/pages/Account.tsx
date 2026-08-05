@@ -557,7 +557,7 @@ export default function Account() {
       )}
 
       {/* CONTENT CONTAINER */}
-      <div className="max-w-2xl mx-auto px-3 sm:px-4 pt-3 sm:pt-5">
+      <div className="max-w-2xl lg:max-w-5xl mx-auto px-3 sm:px-4 lg:px-8 pt-3 sm:pt-6">
 
         {/* ==================================================================== */}
         {/* 1. MAIN ACCOUNT DASHBOARD VIEW */}

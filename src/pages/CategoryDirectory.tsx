@@ -219,7 +219,7 @@ export default function CategoryDirectory() {
               className="overflow-x-auto no-scrollbar py-1 w-full -mx-3 px-3 sm:mx-0 sm:px-0"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              <div className="grid grid-rows-2 grid-flow-col auto-cols-[calc((100vw-3.2rem)/5.5)] sm:auto-cols-[82px] md:auto-cols-[92px] gap-x-2.5 sm:gap-x-3 gap-y-2.5 sm:gap-y-3 pb-2">
+              <div className="grid grid-rows-2 grid-flow-col auto-cols-[calc((100vw-3.2rem)/5.5)] sm:auto-cols-[82px] md:auto-cols-[92px] lg:auto-cols-[110px] gap-x-2.5 sm:gap-x-3 gap-y-2.5 sm:gap-y-3 pb-2">
                 {currentDepartmentCategories.map((cat) => {
                   return (
                     <button

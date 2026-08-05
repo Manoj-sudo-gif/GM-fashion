@@ -268,7 +268,7 @@ export default function Home() {
     <main className="pt-0">
       {/* Hero Containerized Rounded Rectangle Carousel Style */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 mb-8 sm:mb-12">
-        <div className="relative w-full aspect-[16/9] rounded-2xl sm:rounded-[2.5rem] overflow-hidden bg-black shadow-[0_12px_40px_rgba(0,0,0,0.15)] border border-zinc-100">
+        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:max-h-[520px] rounded-2xl sm:rounded-[2.5rem] overflow-hidden bg-black shadow-[0_12px_40px_rgba(0,0,0,0.15)] border border-zinc-100">
           {heroSlides.map((slide, index) => (
             <motion.img 
               key={slide.id}

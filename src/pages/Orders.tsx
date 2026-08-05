@@ -169,7 +169,7 @@ export default function Orders() {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto w-full px-3 sm:px-4 flex flex-col min-h-[85vh] pt-3 sm:pt-5">
+      <div className="max-w-2xl lg:max-w-5xl mx-auto w-full px-3 sm:px-4 lg:px-8 flex flex-col min-h-[85vh] pt-3 sm:pt-6">
 
         {/* TOP CONTROL BAR: SEARCH AND FILTERS */}
         <div className="space-y-3 mb-5">

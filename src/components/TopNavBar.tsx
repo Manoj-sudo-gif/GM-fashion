@@ -266,18 +266,7 @@ export default function TopNavBar() {
               </Link>
             </div>
             
-            {/* Desktop Navigation Links */}
-            <div className={`hidden md:flex gap-6 items-center transition-[opacity,transform,max-width] duration-300 ease-out will-change-[opacity,transform,max-width] ${
-              (isScrolled && !isCategoryPage && !isProductsPage) || isProductDetailPage
-                ? 'opacity-0 max-w-0 scale-95 pointer-events-none overflow-hidden hidden' 
-                : 'opacity-100 max-w-[600px] scale-100'
-            }`}>
-              <Link to="/products?category=New Arrivals" className={getLinkClass('New Arrivals')}>New Arrivals</Link>
-              <Link to="/products?category=Collections" className={getLinkClass('Collections')}>Collections</Link>
-              <Link to="/products?category=Men" className={getLinkClass('Men')}>Men</Link>
-              <Link to="/products?category=Women" className={getLinkClass('Women')}>Women</Link>
-              <Link to="/products?category=Editorial" className={getLinkClass('Editorial')}>Editorial</Link>
-            </div>
+            {/* Desktop Navigation Links removed per request */}
 
             {/* Scrolled Search Bar: occupies the main place when scrolled (only on non-category and non-products pages) */}
             <div className={`flex-grow transition-[opacity,transform] duration-300 ease-out will-change-[opacity,transform] ${

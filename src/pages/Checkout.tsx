@@ -745,7 +745,7 @@ export default function Checkout() {
 
       {/* 2. STEP 1: REVIEW YOUR ORDER UI (Matching Reference Image) */}
       {currentStep === 1 && (
-        <main className="max-w-xl mx-auto space-y-3 pt-3">
+        <main className="max-w-xl lg:max-w-4xl mx-auto space-y-3 pt-3 lg:pt-6">
           <div className="px-3 sm:px-4 space-y-3">
             {/* Product List Card */}
             <div className="bg-white rounded-xl border border-zinc-200/80 shadow-2xs overflow-hidden divide-y divide-zinc-100">
@@ -1120,7 +1120,7 @@ export default function Checkout() {
 
       {/* 3. STEP 2: PAYMENT METHOD & CONDITIONAL OFFERS */}
       {currentStep === 2 && (
-        <main className="max-w-xl mx-auto px-3 sm:px-4 space-y-3 pt-3">
+        <main className="max-w-xl lg:max-w-4xl mx-auto px-3 sm:px-4 space-y-3 pt-3 lg:pt-6">
           
           {/* Address Review Summary Banner */}
           <div className="bg-white rounded-xl border border-zinc-200/80 p-3.5 shadow-2xs flex items-center justify-between gap-3">
